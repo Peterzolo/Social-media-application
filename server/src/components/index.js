@@ -1,18 +1,11 @@
 import userRoutes from "./user/user.route.js";
-import productRoutes from "./product/product.routes.js"
-import orderRoutes from "./order/order.routes.js"
+import productRoutes from "./product/product.routes.js";
 
-
- export const componentModule = {  
+export const componentModule = {
   userModule: {
-    routes: userRoutes,      
+    routes: userRoutes,
   },
   productModule: {
     routes: productRoutes,
-  },
-  orderModule: {
-    routes: orderRoutes,
-  },
+  },  
 };
-
-

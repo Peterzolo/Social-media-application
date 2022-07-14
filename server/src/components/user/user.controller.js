@@ -1,4 +1,4 @@
-import { findOrderById } from '../order/order.dao.js';
+
 import { findAllUsers, findUserById } from './user.dao.js';
 import { createUser, signIn } from './user.service.js';
 import jwt from 'jsonwebtoken';
@@ -8,8 +8,10 @@ export const register = async (req, res) => {
   const body = req.body;
   try {
     const userObject = {
-      email: body.email,
+      firstName: body.firstName,
+      lastName: body.lastName,
       username: body.username,
+      email: body.email,
       password: body.password,
       isAdmin: body.isAdmin,
       status: body.status,
@@ -106,7 +108,7 @@ export const updateUserprofile = async (req, res) => {
     res.send({
       success: true,
       message: 'Profile successfully updated',
-      result: savedUserProfile,
+      result: savedUserProfile,    
     });
   }
 };

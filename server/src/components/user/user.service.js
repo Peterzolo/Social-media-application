@@ -1,24 +1,46 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
-import { findUserByEmail, saveUserPayload } from './user.dao.js';
-import ApiError from '../../error/ApiError.js';
+import { findUserByEmail, saveUserPayload } from "./user.dao.js";
+import ApiError from "../../error/ApiError.js";
 
 export const createUser = async ({
+  firstName,
+  lastName,
   email,
   username,
   password,
+  profilePicture,
+  coverPicture,
+  about,
+  livesIn,
+  worksAt,
+  relationship,
+  country,
+  followers,
+  following,
   isAdmin,
   status,
 }) => {
   const findUser = await findUserByEmail({ email });
   if (findUser) {
-    throw ApiError.userExists({ message: 'User already exists' });
+    throw ApiError.userExists({ message: "User already exists" });
   }
   const userObject = {
+    firstName,
+    lastName,
     email,
     username,
     password,
+    profilePicture,
+    coverPicture,
+    about,
+    livesIn,
+    worksAt,
+    relationship,
+    country,
+    followers,
+    following,
     isAdmin,
     status,
   };
@@ -26,14 +48,22 @@ export const createUser = async ({
   const savedUser = await saveUserPayload(userObject);
 
   const payload = {
-    _id: savedUser._id,
+    firstName: savedUser.firstName,
+    lastName: savedUser.lastName,
+    username: savedUser.username,
+    email: savedUser.email,
+    email: savedUser.email,
+    email: savedUser.email,
+    email: savedUser.email,
+    email: savedUser.email,
     email: savedUser.email,
     username: savedUser.username,
     isAdmin: savedUser.isAdmin,
+    _id: savedUser._id,
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: '1d',
+    expiresIn: "1d",
   });
 
   return {
@@ -50,16 +80,16 @@ export const signIn = async (email, password) => {
   const user = await findUserByEmail({ email });
 
   if (!user) {
-    throw ApiError.notFound({ message: 'User does not exist' });
+    throw ApiError.notFound({ message: "User does not exist" });
   }
 
   const validPassword = await bcrypt.compare(password, user.password);
 
   if (!validPassword) {
-    throw ApiError.wrongCredential({ message: 'Wrong credential' });
+    throw ApiError.wrongCredential({ message: "Wrong credential" });
   }
-  if (user.status !== 'active') {
-    throw ApiError.notFound({ message: 'User does not exist' });
+  if (user.status !== "active") {
+    throw ApiError.notFound({ message: "User does not exist" });
   }
 
   const payload = {
@@ -70,7 +100,7 @@ export const signIn = async (email, password) => {
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: '1d',
+    expiresIn: "1d",
   });
 
   return {

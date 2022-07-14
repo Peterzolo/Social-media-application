@@ -1,16 +1,16 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 import {
   deleteProduct,
   fetchAllProducts,
   findProductById,
   findProductOwnerById,
   updateProduct,
-} from './product.dao.js';
-import ApiError from '../../error/ApiError.js';
-import { findUserById } from '../user/user.dao.js';
-import Product from './product.model.js';
-import { createProduct } from './product.service.js';
-import cloudinary from '../../utils/cloudinary.js';
+} from "./product.dao.js";
+import ApiError from "../../error/ApiError.js";
+import { findUserById } from "../user/user.dao.js";
+import Product from "./product.model.js";
+import { createProduct } from "./product.service.js";
+import cloudinary from "../../utils/cloudinary.js";
 
 export const postProduct = async (req, res) => {
   try {
@@ -24,7 +24,6 @@ export const postProduct = async (req, res) => {
       description,
       price,
       brand,
-
       createdAt,
       status,
     } = req.body;
@@ -32,7 +31,7 @@ export const postProduct = async (req, res) => {
     const userId = req.user;
 
     if (userId.isAdmin === false) {
-      return res.status(402).send({ message: 'You are not authorized' });
+      return res.status(402).send({ message: "You are not authorized" });
     }
     const result = await cloudinary.uploader.upload(req.file.path);
 
@@ -46,7 +45,6 @@ export const postProduct = async (req, res) => {
       description,
       price,
       brand,
-
       createdAt,
       status,
       createdAt: new Date().toString(),
@@ -54,7 +52,7 @@ export const postProduct = async (req, res) => {
     const productData = await createProduct(dataObject);
     res.status(200).json({
       success: true,
-      message: 'Product successfully created',
+      message: "Product successfully created",
       result: productData,
     });
   } catch (error) {
@@ -66,12 +64,12 @@ export const getAllProducts = async (req, res) => {
   try {
     const allProducts = await fetchAllProducts();
     if (!allProducts.length) {
-      throw ApiError.notFound({ message: 'No Product Found' });
+      throw ApiError.notFound({ message: "No Product Found" });
     }
     res.status(200).json({
       numInStock: allProducts.length,
       success: true,
-      message: 'Successfully fetched all products',
+      message: "Successfully fetched all products",
       result: allProducts,
     });
   } catch (error) {
@@ -87,14 +85,14 @@ export const getOneProduct = async (req, res) => {
       const product = findProduct;
       res.status(200).send({
         Success: true,
-        message: 'Product successfully fetched',
+        message: "Product successfully fetched",
         result: product,
       });
     } else {
-      res.status(401).send({ message: 'Product Not Found' });
+      res.status(401).send({ message: "Product Not Found" });
     }
   } catch (error) {
-    res.status(400).send({ message: 'Error has occured' });
+    res.status(400).send({ message: "Error has occured" });
   }
 };
 
@@ -103,10 +101,10 @@ export const editProduct = async (req, res) => {
     const { id } = req.params;
 
     const product = await findProductById(id);
-    console.log('PRODUCT', product);
+    console.log("PRODUCT", product);
 
-    if (product.status === 'inactive') {
-      throw ApiError.notFound({ message: 'Event not found' });
+    if (product.status === "inactive") {
+      throw ApiError.notFound({ message: "Event not found" });
     }
 
     // Delete image from cloudinary
@@ -129,15 +127,15 @@ export const editProduct = async (req, res) => {
       cloudinary_id: result?.public_id || product.cloudinary_id,
     };
 
-    console.log('UPDATE DATA', data);
+    console.log("UPDATE DATA", data);
 
     let editedProduct = await updateProduct(id, data);
 
     if (!editedProduct) {
-      throw ApiError.notFound({ message: 'Product not available' });
+      throw ApiError.notFound({ message: "Product not available" });
     }
     return res.status(200).send({
-      message: 'Product updated successfully',
+      message: "Product updated successfully",
       content: editedProduct,
       success: true,
     });
@@ -151,7 +149,7 @@ export const removeProduct = async (req, res) => {
     const userId = req.user;
 
     if (userId.isAdmin === false) {
-      return res.status(402).send({ message: 'You are not authorized' });
+      return res.status(402).send({ message: "You are not authorized" });
     }
 
     const id = req.params.id;
@@ -162,8 +160,8 @@ export const removeProduct = async (req, res) => {
 
     const findProduct = await findProductById(id);
 
-    if (findProduct.status === 'inactive') {
-      throw ApiError.notFound({ message: 'Product not available' });
+    if (findProduct.status === "inactive") {
+      throw ApiError.notFound({ message: "Product not available" });
     }
 
     await cloudinary.uploader.destroy(findProduct.cloudinary_id);
@@ -173,11 +171,11 @@ export const removeProduct = async (req, res) => {
     let deletedProduct = await deleteProduct(query);
 
     if (!deletedProduct) {
-      throw ApiError.notFound({ message: 'Could not delete product' });
+      throw ApiError.notFound({ message: "Could not delete product" });
     }
     return res.status(200).send({
       success: true,
-      message: 'Product deleted successfully',
+      message: "Product deleted successfully",
       result: deletedProduct,
     });
   } catch (error) {
@@ -193,11 +191,11 @@ export const findProductByVendor = async (req, res) => {
     }
     const userProduct = await findProductOwnerById(id);
     if (userProduct.length < 1) {
-      throw ApiError.notFound({ message: 'Product could not be found' });
+      throw ApiError.notFound({ message: "Product could not be found" });
     }
     res.status(200).json({
       Success: true,
-      Message: 'Product successfully fetched',
+      Message: "Product successfully fetched",
       data: userProduct,
     });
   } catch (error) {
@@ -219,11 +217,11 @@ export const findProductByVendor = async (req, res) => {
 export const searchProductByTitle = async (req, res) => {
   const { searchQuery } = req.query;
   try {
-    const title = new RegExp(searchQuery, 'i');
+    const title = new RegExp(searchQuery, "i");
     const Products = await Product.find({ title });
     res.json(Products);
   } catch (error) {
-    res.status(404).json({ message: 'Something went wrong' });
+    res.status(404).json({ message: "Something went wrong" });
   }
 };
 
@@ -233,11 +231,11 @@ export const getProductsByTag = async (req, res) => {
     const Products = await Product.find({ tags: { $in: tag } });
     res.json({
       success: true,
-      message: 'Successful',
+      message: "Successful",
       data: Products,
     });
   } catch (error) {
-    res.status(404).json({ message: 'Something went wrong' });
+    res.status(404).json({ message: "Something went wrong" });
   }
 };
 
@@ -247,11 +245,11 @@ export const getRelatedProducts = async (req, res) => {
     const Products = await Product.find({ tags: { $in: tag } });
     res.json({
       success: true,
-      message: 'Successful',
+      message: "Successful",
       data: Products,
     });
   } catch (error) {
-    res.status(404).json({ message: 'Something went wrong' });
+    res.status(404).json({ message: "Something went wrong" });
   }
 };
 
@@ -259,7 +257,7 @@ export const getProductLikes = async (req, res) => {
   const { id } = req.params;
   try {
     if (!req.userId) {
-      return res.json({ message: 'User is not authenticated' });
+      return res.json({ message: "User is not authenticated" });
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -284,7 +282,7 @@ export const getProductLikes = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Successfully liked',
+      message: "Successfully liked",
       data: updatedProduct,
     });
   } catch (error) {
