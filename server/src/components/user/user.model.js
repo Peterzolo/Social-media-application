@@ -1,8 +1,16 @@
-import bcrypt from 'bcryptjs';
-import mongoose from 'mongoose';
+import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
 
 const UserSchema = mongoose.Schema(
   {
+    firstname: {
+      type: String,
+      required: true,
+    },
+    lastname: {
+      type: String,
+      required: true,
+    },
     username: {
       type: String,
       required: true,
@@ -20,18 +28,27 @@ const UserSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    profilePicture: { type: String },
+    coverPicture: { type: String },
+    about: { type: String },
+    livesIn: { type: String },
+    worksAt: { type: String },
+    relationship: { type: String },
+    country: { type: String },
+    followers: [],
+    following: [],
     status: {
       type: String,
-      enum: ['active', 'inactive'],
-      default: 'active',
+      enum: ["active", "inactive"],
+      default: "active",
     },
   },
   { timestamps: true }
 );
 
-UserSchema.pre('save', async function (next) {
+UserSchema.pre("save", async function (next) {
   try {
-    if (!this.isModified('password')) {
+    if (!this.isModified("password")) {
       return next();
     }
 
@@ -44,5 +61,5 @@ UserSchema.pre('save', async function (next) {
   }
 });
 
-const User = mongoose.model('user', UserSchema);
+const User = mongoose.model("user", UserSchema);
 export default User;
