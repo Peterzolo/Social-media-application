@@ -98,7 +98,7 @@ export const postData = [
   },
   {
     id: 2,
-    name: "Buckner",
+    name: "Tim",
     image: postImage1,
     description: "Lorem ipsum dolor sit amet",
     likes: 3200,
@@ -106,7 +106,7 @@ export const postData = [
   },
   {
     id: 3,
-    name: "Buckner",
+    name: "Jimmy",
     image: postImage1,
     description: "Lorem ipsum dolor sit amet",
     likes: 4100,
@@ -114,7 +114,7 @@ export const postData = [
   },
   {
     id: 4,
-    name: "Buckner",
+    name: "Jones",
     image: postImage1,
     description: "Lorem ipsum dolor sit amet",
     likes: 6029,
@@ -122,7 +122,7 @@ export const postData = [
   },
   {
     id: 5,
-    name: "Buckner",
+    name: "James",
     image: postImage2,
     description: "Lorem ipsum dolor sit amet",
     likes: 20033,
@@ -130,7 +130,7 @@ export const postData = [
   },
   {
     id: 6,
-    name: "Buckner",
+    name: "Mark",
     image: postImage3,
     description: "Lorem ipsum dolor sit amet",
     likes: 12000,
@@ -138,7 +138,7 @@ export const postData = [
   },
   {
     id: 7,
-    name: "Buckner",
+    name: "Donald",
     image: postImage4,
     description: "Lorem ipsum dolor sit amet",
     likes: 7643,
@@ -146,7 +146,7 @@ export const postData = [
   },
   {
     id: 8,
-    name: "Buckner",
+    name: "Truce",
     image: postImage5,
     description: "Lorem ipsum dolor sit amet",
     likes: 23245,
@@ -154,7 +154,7 @@ export const postData = [
   },
   {
     id: 9,
-    name: "Buckner",
+    name: "Steve",
     image: postImage6,
     description: "Lorem ipsum dolor sit amet",
     likes: 65432,
@@ -162,7 +162,7 @@ export const postData = [
   },
   {
     id: 10,
-    name: "Buckner",
+    name: "Jones",
     image: postImage7,
     description: "Lorem ipsum dolor sit amet",
     likes: 1234,
@@ -170,7 +170,7 @@ export const postData = [
   },
   {
     id: 11,
-    name: "Buckner",
+    name: "Beauty",
     image: postImage8,
     description: "Lorem ipsum dolor sit amet",
     likes: 86432,

@@ -1,10 +1,10 @@
 import React from "react";
 import "../post-detail/PostDetails.css";
 
-const PostDetails = () => {
+const PostDetails = ({...item}) => {
   return (
     <div>
-      <h3>Post Details</h3>
+      <h3>{item.name}</h3>
     </div>
   );
 };
