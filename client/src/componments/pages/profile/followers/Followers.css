@@ -1,0 +1,54 @@
+.follower-card-container{
+  width: 100%;
+  border-radius: 0.7rem;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  /* max-height: 10rem; */
+}
+
+
+.follower{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.follower>div{
+    display: flex;
+    gap: 10px;
+}
+
+
+.follower-image{
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+}
+
+.follower-name{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: 50px;
+}
+
+.follower-name>span:nth-of-type(1){
+    font-weight: bold;
+}
+
+.follower-title{
+    background-color: rgb(6, 42, 74);
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 10px;
+}
+ 
+.follower-title > h3{
+  text-align: center;
+  color: #ffff;
+  font-size: 16px;
+  font-weight: bold;
+}

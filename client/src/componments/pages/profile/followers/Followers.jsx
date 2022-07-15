@@ -3,18 +3,18 @@ import { followers } from "../../../../data/followers";
 import "../followers/Followers.css";
 const Followers = () => {
   return (
-    <div>
-      <h3>Your Followers</h3>
-
+    <div className="follower-card-container">
+     <div className="follower-title"><h3>Your Followers</h3></div> 
       {followers.map(follower => (
-        <div className="followers" key={follower.id}>
+        <div className="follower" key={follower.id}>
           <div>
-            <img src={follower.img} alt="" />
+            <img src={follower.img} alt="" className="follower-image" />
             <div className="follower-name">
-              <span>{follower.name}</span>
-              <span>{follower.username}</span>
+              <span>{`${follower.firstName}  ${follower.lastName}` }</span>
+              <span>@{follower.username}</span>
             </div>
           </div>
+          <button>Follow</button>
         </div>
       ))}
     </div>
