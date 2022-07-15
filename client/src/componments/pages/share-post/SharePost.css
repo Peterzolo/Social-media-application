@@ -1,0 +1,64 @@
+.sharePost{
+    background-color: #e6f7ff;
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+.sharePost > img{
+border-radius: 50%;
+width: 3rem;
+height: 3rem;
+}
+
+.text-input{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 1rem;
+}
+
+.text-input > input{
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 17px;
+  border: none;
+  outline: none;
+}
+
+::placeholder{
+    text-align: center;
+    font-style: italic;
+    font-weight: 500;
+    color: #adc6ff;
+}
+
+
+.post-options{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.option{
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.option-label{
+    color: #595959;
+    font-weight: 600;
+    margin-right: 3px;
+}
+
+.button-share{
+    width: 50px;
+    padding: 5px;
+}
