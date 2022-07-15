@@ -1,9 +1,21 @@
 import FollowerOne from "../img/follower01.png";
-import FollowereTwo from "../img/follower02.png";
+import FollowerTwo from "../img/follower02.png";
 import FollowerThree from "../img/follower03.png";
 import FollowerFour from "../img/follower04.png";
 import FollowerFive from "../img/follower05.png";
 import FollowerSix from "../img/follower06.png";
+import LuxuryImage from "../img/Luxury-Home.png";
+import SocialImageTwo from "../img/social-image002.png";
+import SocialImageThree from "../img/social-image003.png";
+
+export const newImageOne = FollowerOne;
+export const newImageTwo = FollowerTwo;
+export const newImageThree = FollowerThree;
+export const newImageFour = FollowerFour;
+export const newImageFive = FollowerFive;
+export const Luxury = LuxuryImage;
+export const SocialImage2 = SocialImageTwo;
+export const SocialImage3 = SocialImage3;
 
 export const followers = [
   {
@@ -18,7 +30,7 @@ export const followers = [
     firstName: "Tom",
     lastName: "G",
     username: "gtom",
-    img: FollowereTwo
+    img: FollowerTwo
   },
   {
     id: 3,

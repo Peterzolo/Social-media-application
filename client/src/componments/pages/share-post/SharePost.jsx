@@ -1,11 +1,14 @@
 
 
 import React from 'react'
+import { Luxury } from '../../../data/followers'
+
+
 import "../share-post/SharePost.css"
 const SharePost = () => {
   return (
     <div>
-      <h3>New share post</h3>
+    <img src={Luxury} alt="" />
     </div>
   )
 }
