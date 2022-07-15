@@ -18,6 +18,21 @@ import postImageEight from "../img/postImage008.png";
 import postImageNine from "../img/postImage009.png";
 import postImageTen from "../img/postImage010.png";
 import postImageEleven from "../img/postImage011.png";
+import unliked from "../img/unliked.png";
+import instagram from "../img/instagram.png";
+import comment from "../img/comment.png";
+import share from "../img/share.png";
+import liked from "../img/liked.png";
+
+/////////////////////////////////////////////////
+
+export const unLikedPost = unliked;
+export const instagramShare = instagram;
+export const commentPost = comment;
+export const sharePost = share;
+export const likedpost = liked;
+
+////////////////////////////////////////////////
 
 export const newImageOne = FollowerOne;
 export const newImageTwo = FollowerTwo;
@@ -99,15 +114,15 @@ export const postData = [
   {
     id: 2,
     name: "Tim",
-    image: postImage1,
+    image: postImage2,
     description: "Lorem ipsum dolor sit amet",
     likes: 3200,
-    liked: true
+    liked: false
   },
   {
     id: 3,
     name: "Jimmy",
-    image: postImage1,
+    image: postImage3,
     description: "Lorem ipsum dolor sit amet",
     likes: 4100,
     liked: true
@@ -115,15 +130,15 @@ export const postData = [
   {
     id: 4,
     name: "Jones",
-    image: postImage1,
+    image: postImage4,
     description: "Lorem ipsum dolor sit amet",
     likes: 6029,
-    liked: true
+    liked: false
   },
   {
     id: 5,
     name: "James",
-    image: postImage2,
+    image: postImage5,
     description: "Lorem ipsum dolor sit amet",
     likes: 20033,
     liked: true
@@ -131,7 +146,7 @@ export const postData = [
   {
     id: 6,
     name: "Mark",
-    image: postImage3,
+    image: postImage6,
     description: "Lorem ipsum dolor sit amet",
     likes: 12000,
     liked: true
@@ -139,7 +154,7 @@ export const postData = [
   {
     id: 7,
     name: "Donald",
-    image: postImage4,
+    image: postImage7,
     description: "Lorem ipsum dolor sit amet",
     likes: 7643,
     liked: true
@@ -147,15 +162,15 @@ export const postData = [
   {
     id: 8,
     name: "Truce",
-    image: postImage5,
+    image: postImage8,
     description: "Lorem ipsum dolor sit amet",
     likes: 23245,
-    liked: true
+    liked: false
   },
   {
     id: 9,
     name: "Steve",
-    image: postImage6,
+    image: postImage9,
     description: "Lorem ipsum dolor sit amet",
     likes: 65432,
     liked: true
@@ -163,7 +178,7 @@ export const postData = [
   {
     id: 10,
     name: "Jones",
-    image: postImage7,
+    image: postImage10,
     description: "Lorem ipsum dolor sit amet",
     likes: 1234,
     liked: true
@@ -171,7 +186,7 @@ export const postData = [
   {
     id: 11,
     name: "Beauty",
-    image: postImage8,
+    image: postImage11,
     description: "Lorem ipsum dolor sit amet",
     likes: 86432,
     liked: true

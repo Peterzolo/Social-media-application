@@ -8,7 +8,7 @@ const DisplayPost = () => {
   return (
     <div>
       {postData.map(item => (
-        <div className="display-container">
+        <div className="display-container" key={item.id}>
           <PostDetails {...item} />
         </div>
       ))}
