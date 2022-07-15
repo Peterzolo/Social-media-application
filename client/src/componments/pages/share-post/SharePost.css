@@ -55,10 +55,22 @@ height: 3rem;
 .option-label{
     color: #595959;
     font-weight: 600;
-    margin-right: 3px;
+    /* margin-right: 3px; */
 }
 
 .button-share{
     width: 50px;
     padding: 5px;
+}
+
+.file{
+    display: none;
+}
+
+.times{
+    background-color: red;
+    width: 20px;
+    border-radius: 50px;
+    padding: 5px;
+    font-weight: bold;
 }
