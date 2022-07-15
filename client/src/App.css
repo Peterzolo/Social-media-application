@@ -16,3 +16,15 @@
     background: #006d75;
     filter: blur(72px);
   }
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    background: #69c0ff;
+    transition: all 100ms ease-out;
+    padding: 10px;
+  }

@@ -14,7 +14,7 @@ const Followers = () => {
               <span>@{follower.username}</span>
             </div>
           </div>
-          <button>Follow</button>
+          <button type="button" className="button">Follow</button>
         </div>
       ))}
     </div>
