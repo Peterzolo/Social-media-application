@@ -1,21 +1,39 @@
+import React from "react";
+import SocialImageTwo from "../../../../img/social-image002.png";
+import SocialImageThree from "../../../../img/social-image003.png";
+import LuxuryHome from "../../../../img/Luxury-Home.png";
 
-
-import React from 'react'
-import SocialImageTwo from "../../../../img/social-image002.png"
-import SocialImageThree from "../../../../img/social-image003.png"
-import LuxuryHome from "../../../../img/Luxury-Home.png"
-
-import "../profileCard/ProfileCard.css"
+import "../profileCard/ProfileCard.css";
 
 const ProfileCard = () => {
   return (
-    <div className='profile-card'>
-       <div className="profile-images">
-      <img src={SocialImageTwo} alt="" />
-      <img src={LuxuryHome} alt="" />
+    <div className="profile-card">
+      <div className="profile-images">
+        <img src={LuxuryHome} alt="" />
+        <img src={SocialImageTwo} alt="" />
+      </div>
+      <div className="profile-name">
+        <span>Boostar Homes Limited</span>
+        <span>Luxury Real Estate Manager</span>
+      </div>
+
+      <div className="follow-status">
+        <hr />
+        <div>
+          <div className="follow">
+            <span>Followings</span>
+            <span>3000</span>
+          </div>
+            <div className="vl"></div>
+            <div className="follow">
+            <span>Followers</span>
+            <span>2.5million</span>
+          </div>
+        </div>
+        <hr />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProfileCard
+export default ProfileCard;
