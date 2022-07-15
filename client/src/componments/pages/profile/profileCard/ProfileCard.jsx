@@ -7,7 +7,7 @@ import "../profileCard/ProfileCard.css";
 
 const ProfileCard = () => {
   return (
-    <div className="profile-card">
+    <div className="profile-card" style={{ marginTop: "30px" }}>
       <div className="profile-images">
         <img src={LuxuryHome} alt="" />
         <img src={SocialImageTwo} alt="" />
@@ -24,13 +24,17 @@ const ProfileCard = () => {
             <span>Followings</span>
             <span>3000</span>
           </div>
-            <div className="vl"></div>
-            <div className="follow">
+          <div className="vl"></div>
+          <div className="follow">
             <span>Followers</span>
             <span>2.5million</span>
           </div>
         </div>
         <hr />
+      </div>
+      <div className="my-profile">
+        <div className="my">My</div>
+        <div className="prof">Profile</div>
       </div>
     </div>
   );
