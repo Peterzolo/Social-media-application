@@ -6,16 +6,18 @@ import {
   HomeIcon,
   NotificationBell
 } from "../../../data/followers";
+import Trendcard from "../trending/Trendcard";
 
 const RightBar = () => {
   return (
     <div className="right-bar">
       <div className="nav-icons">
-        <img src={HomeIcon} alt="" width="25" />
-        <img src={commentPost} alt="" width="25" />
-        <img src={NotificationBell} alt="" width="25" />
+        <img src={HomeIcon} alt="" width="20" />
+        <img src={commentPost} alt="" width="20" />
+        <img src={NotificationBell} alt="" width="20" />
         <UilSetting />
       </div>
+      <Trendcard/>
     </div>
   );
 };

@@ -196,3 +196,39 @@ export const postData = [
     liked: true
   }
 ];
+
+export const trendData = [
+  {
+    name : "Marketing",
+    shares : 600
+  },
+  {
+    name : "Tech",
+    shares : 856
+  },
+  {
+    name : "Fashion",
+    shares : 10054
+  },
+  {
+    name : "Health",
+    shares : 164326
+  },
+  {
+    name : "Social",
+    shares : 223457
+  },
+  {
+    name : "Politics",
+    shares : 2231643
+  },
+  {
+    name : "Invention",
+    shares : 77543
+  },
+  {
+    name : "Business",
+    shares : 6643254
+  }
+
+]
