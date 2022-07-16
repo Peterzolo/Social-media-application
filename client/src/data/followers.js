@@ -23,6 +23,8 @@ import instagram from "../img/instagram.png";
 import comment from "../img/comment.png";
 import share from "../img/share.png";
 import liked from "../img/liked.png";
+import home from "../img/home.png";
+import notification from "../img/notification.png";
 
 /////////////////////////////////////////////////
 
@@ -31,6 +33,8 @@ export const instagramShare = instagram;
 export const commentPost = comment;
 export const sharePost = share;
 export const likedpost = liked;
+export const HomeIcon = home;
+export const NotificationBell = notification;
 
 ////////////////////////////////////////////////
 

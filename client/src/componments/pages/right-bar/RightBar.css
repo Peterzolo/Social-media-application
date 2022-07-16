@@ -1,0 +1,12 @@
+.right-bar{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+
+.nav-icons{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
