@@ -33,3 +33,8 @@
   cursor: pointer;
   background: transparent;
 }
+
+
+::-webkit-scrollbar {
+  display: none;
+}
