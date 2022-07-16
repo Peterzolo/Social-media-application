@@ -1,0 +1,39 @@
+
+.info-card{
+    padding : 10px;
+    background-color: #e6f7ff;
+    margin-top: 50px;
+    width: 100%;
+
+}
+
+.info-heading{
+    background: linear-gradient(106.23deg, #f99827 0%, #f95f35 100%);
+
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+     border-radius: 10px;
+}
+
+.info-heading > h3{
+    color: white;
+}
+.info{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-desc{
+    color: cornflowerblue;
+}
+.log-out{
+    width: 6rem;
+    height: 25px;
+    align-self: flex-end;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    background: linear-gradient(106.23deg, #f99827 0%, #f95f35 100%);
+
+}
