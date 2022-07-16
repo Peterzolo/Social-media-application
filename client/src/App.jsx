@@ -1,16 +1,22 @@
-import React from 'react'
-
-import "./App.css"
-import Home from './componments/pages/home/Home'
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import "./App.css";
+import Home from "./componments/pages/home/Home";
+import ProfileMain from "./componments/screens/profileScreen/Profile-main/ProfileMain";
 
 const App = () => {
   return (
-    <div className='App'>
-      <div className="blur" style={{top : "-18%", right : "0"}}></div>
-      <div className="blur" style={{top : "-36%", left : "-8"}}></div>
-      <Home/>
-    </div>
-  )
-}
+    <div className="App">
+      <div className="blur" style={{ top: "-18%", right: "0" }}></div>
+      <div className="blur" style={{ top: "-36%", left: "-8" }}></div>
+      <Routes>
 
-export default App
+        <Route  path="/" element ={ <Home/> } />
+        <Route  path="/profile" element ={ <ProfileMain/> } />
+      </Routes>
+   
+    </div>
+  );
+};
+
+export default App;
