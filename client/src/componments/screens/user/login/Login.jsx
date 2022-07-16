@@ -1,7 +1,13 @@
 import React from "react";
+import { useState } from "react";
 import { Boostar101Logo } from "../../../../data/followers";
 import "../login/Login.css";
 const Login = () => {
+  const [form, setForm] = useState();
+
+  const handleFormChange = () => {};
+  const handleFormSubmit = () => {};
+
   return (
     <div className="container">
       <div
@@ -22,7 +28,12 @@ const Login = () => {
           }}
         >
           <div className="left-image p-3">
-            <img src={Boostar101Logo} alt="" width="200" className="boostar-logo" />
+            <img
+              src={Boostar101Logo}
+              alt=""
+              width="200"
+              className="boostar-logo"
+            />
           </div>
           <div className="discription">
             <h3>Welcome To Boostar 101.com</h3>
@@ -30,7 +41,16 @@ const Login = () => {
             <p>Inspire | Empower | Motivate</p>
           </div>
         </div>
-        <div className="col-md-6">Form</div>
+
+        <div className="col-md-6">
+          <form action="" className="authForm" onSubmit={handleFormSubmit}>
+            <div>
+              
+
+            </div>
+          
+          </form>
+        </div>
       </div>
     </div>
   );
