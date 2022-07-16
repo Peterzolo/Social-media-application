@@ -18,8 +18,13 @@ const RightBar = () => {
         <UilSetting />
       </div>
       <Trendcard/>
+      <div className="share">
+        <button className="button r-share">Share</button>
+      </div>
     </div>
   );
 };
+
+
 
 export default RightBar;
