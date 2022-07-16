@@ -199,36 +199,42 @@ export const postData = [
 
 export const trendData = [
   {
+    id : 1,
     name : "Marketing",
-    shares : 600
+    shares : 87.5
   },
-  {
+  {id : 2,
     name : "Tech",
-    shares : 856
+    shares : 65.1
   },
   {
+    id : 3,
     name : "Fashion",
-    shares : 10054
+    shares : 13.5
   },
-  {
+  { id : 4,
     name : "Health",
-    shares : 164326
+    shares : 98.2
   },
   {
+    id : 5,
     name : "Social",
-    shares : 223457
+    shares : 56.8
   },
   {
+    id : 6,
     name : "Politics",
-    shares : 2231643
+    shares : 13.8
   },
   {
+    id : 7,
     name : "Invention",
-    shares : 77543
+    shares : 87.2
   },
   {
+    id : 8,
     name : "Business",
-    shares : 6643254
+    shares : 34.6
   }
 
 ]
