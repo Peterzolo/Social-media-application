@@ -61,6 +61,7 @@ height: 3rem;
 .button-share{
     width: 50px;
     padding: 5px;
+    height: 30px;
 }
 
 .file{
@@ -95,4 +96,8 @@ height: 3rem;
     max-height: 20rem;
     object-fit: cover;
     border-radius: 0.5rem;
+}
+
+.share-icons{
+    cursor: pointer;
 }

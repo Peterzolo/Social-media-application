@@ -4,7 +4,7 @@ import { UilPlayCircle } from "@iconscout/react-unicons";
 import { UilSchedule } from "@iconscout/react-unicons";
 import { UilLocationPoint } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
-import { Luxury } from "../../../data/followers";
+import { Luxury, sharePost } from "../../../data/followers";
 
 import "../share-post/SharePost.css";
 const SharePost = () => {
@@ -32,22 +32,22 @@ const SharePost = () => {
           </div>
           <div className="option">
             <div className="option-label">Video</div>
-            <UilPlayCircle style={{ color: "#d4380d" }} />
+            <UilPlayCircle style={{ color: "#d4380d",cursor:"pointer"  }} />
           </div>
           <div className="option">
             <div className="option-label">Location</div>
-            <UilLocationPoint style={{ color: "#5b8c00" }} />
+            <UilLocationPoint style={{ color: "#5b8c00",cursor:"pointer" }} />
           </div>
           <div className="option">
             <div className="option-label">Schedule</div>
-            <UilSchedule style={{ color: "#ad6800" }} />
+            <UilSchedule style={{ color: "#ad6800",cursor:"pointer"  }} />
           </div>
 
           <div className="option">
             <div className="option-label">Share</div>
-            <button type="button" className="button button-share">
-              <i className="bi bi-share-fill"></i>
-            </button>
+         
+
+            <img src={sharePost} alt="" width="25" className="share-icons" />
           </div>
 
           <div className="file">

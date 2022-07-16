@@ -25,6 +25,7 @@ import share from "../img/share.png";
 import liked from "../img/liked.png";
 import home from "../img/home.png";
 import notification from "../img/notification.png";
+import Boostar101 from "../img/boostar101.png";
 
 /////////////////////////////////////////////////
 
@@ -47,6 +48,7 @@ export const Luxury = LuxuryImage;
 export const SocialImage2 = SocialImageTwo;
 export const SocialImage3 = SocialImage3;
 export const SocialImage4 = SocialImageThree;
+export const Boostar101Logo = Boostar101;
 
 /////////////////////////////////////////////////////
 

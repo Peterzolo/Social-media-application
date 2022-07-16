@@ -8,9 +8,23 @@ import RightBar from "../right-bar/RightBar";
 const Home = () => {
   return (
     <div className="home">
-      <ProfileIndex />
-      <PostColumn />
-       <RightBar/>
+      <div className="row gx-3">
+        <div className="col-md-3">
+          <div className="p-2">
+            <ProfileIndex />
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="p-2">
+            <PostColumn />
+          </div>
+        </div>
+        <div className="col-md-3">
+          <div className="p-2">
+            <RightBar />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

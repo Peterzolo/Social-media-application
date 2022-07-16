@@ -2,7 +2,6 @@ import React from "react";
 
 import "../info-card/InfoCard.css";
 import { UilPen } from "@iconscout/react-unicons";
-import { UilSignOut } from "@iconscout/react-unicons";
 
 const InfoCard = () => {
   return (

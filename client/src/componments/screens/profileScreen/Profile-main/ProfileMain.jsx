@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import LeftBarProfile from "../left-profile/LeftBarProfile";
 import ProfileCard from "../../../pages/profile/profileCard/ProfileCard";
 import PostColumn from "../../../pages/post/PostColumn";
-import RightBar from "../right-profile/RightBar";
+import RightBar from "../../../pages/right-bar/RightBar"
 
 import "../Profile-main/ProfileMain.css";
 const ProfileMain = () => {
@@ -22,7 +22,9 @@ const ProfileMain = () => {
             <PostColumn/>
           </div>
         </div>
-        <div className="col-md-3"></div>
+        <div className="col-md-3">
+          <RightBar/>
+        </div>
       </div>
     </div>
   );
