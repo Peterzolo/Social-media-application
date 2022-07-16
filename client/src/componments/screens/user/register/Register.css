@@ -32,7 +32,11 @@
 /* ///////////////////////////////////////////////Right side */
 
 
-
+.sign-up > h3{
+ text-align: center;
+ color: #fcf9f9;
+ font-weight: bold;
+}
 
 input{
     width: 100%;

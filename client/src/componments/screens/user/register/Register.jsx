@@ -67,6 +67,7 @@ const Register = () => {
           }}
         >
           <form className="infoForm" onSubmit={handleFormSubmit}>
+            <div className="sign-up"><h3>Sign Up</h3> </div>
             <div className="row">
               <div className="col-md-6">
                 {" "}
