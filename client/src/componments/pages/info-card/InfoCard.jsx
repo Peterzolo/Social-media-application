@@ -32,11 +32,11 @@ const InfoCard = () => {
       <div className="info">
         <span>
           {" "}
-          <strong>Location</strong>{" "}
+          <strong>Lives In</strong>{" "}
         </span>
         <span className="info-desc">
           {" "}
-          <strong>Lagos</strong>{" "}
+          <strong>Country</strong>{" "}
         </span>
       </div>
       <div className="info">
