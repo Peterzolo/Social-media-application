@@ -9,6 +9,7 @@ const InfoCard = () => {
       <div className="info-heading">
         <h3>Your info -</h3>
         <UilPen  style ={{color : "#fff"}} />
+        <div>MODAL</div>
       </div>
 <div className="info">
     <span> <strong>Marital Status</strong> </span>

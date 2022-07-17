@@ -110,7 +110,7 @@ const Login = () => {
               </button>
             </div>
             <span className="have-account">
-              Not yet registered<Link to="/register">Sign up</Link>{" "}
+              Not yet registered ? <Link to="/register">Sign up</Link>{" "}
             </span>
           </form>
         </div>
