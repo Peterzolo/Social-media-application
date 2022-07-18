@@ -8,7 +8,6 @@ export const register = async (req, res) => {
   const body = req.body;
   try {
     const result = await cloudinary.uploader.upload(req.file.path);
-    console.log("RESULT", result);
 
     //   app.get('/api/images', async (req, res) => {
     //     const { resources } = await cloudinary.search
