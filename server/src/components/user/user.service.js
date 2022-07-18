@@ -24,7 +24,7 @@ export const createUser = async ({
 }) => {
   const findUser = await findUserByEmail({ email });
   if (findUser) {
-    throw ApiError.userExists({ message: "User already exists" });
+    throw ApiError.alreadyExists({ message: "User already exists" });
   }
   const userObject = {
     firstName,
@@ -52,13 +52,6 @@ export const createUser = async ({
     lastName: savedUser.lastName,
     username: savedUser.username,
     email: savedUser.email,
-    email: savedUser.email,
-    email: savedUser.email,
-    email: savedUser.email,
-    email: savedUser.email,
-    email: savedUser.email,
-    username: savedUser.username,
-    isAdmin: savedUser.isAdmin,
     _id: savedUser._id,
   };
 
@@ -69,8 +62,18 @@ export const createUser = async ({
   return {
     email: savedUser.email,
     username: savedUser.username,
-    _id: savedUser._id,
+    profilePicture: savedUser.profilePicture,
+    coverPicture: savedUser.coverPicture,
+    about: savedUser.about,
+    livesIn: savedUser.livesIn,
+    worksAt: savedUser.worksAt,
+    relationship: savedUser.relationship,
+    country: savedUser.country,
+    followers: savedUser.followers,
+    following: savedUser.following,
     isAdmin: savedUser.isAdmin,
+    isAdmin: savedUser.isAdmin,
+    _id: savedUser._id,
     token,
     status,
   };

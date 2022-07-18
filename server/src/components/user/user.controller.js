@@ -1,25 +1,49 @@
-
-import { findAllUsers, findUserById } from './user.dao.js';
-import { createUser, signIn } from './user.service.js';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import { findAllUsers, findUserById } from "./user.dao.js";
+import { createUser, signIn } from "./user.service.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import cloudinary from "../../utils/cloudinary.js";
 
 export const register = async (req, res) => {
   const body = req.body;
   try {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    console.log("RESULT", result);
+
+    //   app.get('/api/images', async (req, res) => {
+    //     const { resources } = await cloudinary.search
+    //         .expression('folder:cloudinary_react')
+    //         .sort_by('public_id', 'desc')
+    //         .max_results(30)
+    //         .execute();
+
+    //     const publicIds = resources.map((file) => file.public_id);
+    //     res.send(publicIds);
+    // });
+
     const userObject = {
       firstName: body.firstName,
       lastName: body.lastName,
       username: body.username,
       email: body.email,
       password: body.password,
+      cloudinary_id: result.public_id,
+      profilePicture: result.secure_url,
+      coverPicture: result.secure_url,
+      about: body.about,
+      livesIn: body.livesIn,
+      worksAt: body.worksAt,
+      relationship: body.relationship,
+      country: body.country,
+      followers: body.followers,
+      following: body.following,
       isAdmin: body.isAdmin,
       status: body.status,
     };
     const user = await createUser(userObject);
     res.status(200).json({
       Success: true,
-      Message: 'User successfully registered',
+      Message: "User successfully registered",
       result: user,
     });
   } catch (error) {
@@ -33,7 +57,7 @@ export const userLogin = async (req, res) => {
     const user = await signIn(email, password);
     res.status(200).json({
       Success: true,
-      message: 'User successfully logged in',
+      message: "User successfully logged in",
       result: user,
     });
   } catch (error) {
@@ -44,11 +68,11 @@ export const userLogin = async (req, res) => {
 export const fetchAllUsers = async (req, res) => {
   const users = await findAllUsers();
   if (users.length < 1) {
-    res.status(402).send({ message: 'Users not found' });
+    res.status(402).send({ message: "Users not found" });
   } else {
     res.status(201).send({
       success: true,
-      message: 'User successfully fetched',
+      message: "User successfully fetched",
       result: users,
     });
   }
@@ -59,11 +83,11 @@ export const fetchUserDetails = async (req, res) => {
   const findUser = await findUserById(id);
 
   if (!findUser) {
-    res.status(402).send({ message: 'User not found' });
+    res.status(402).send({ message: "User not found" });
   } else {
     res.status(201).send({
       success: true,
-      message: 'User successfully fetched',
+      message: "User successfully fetched",
       result: findUser,
     });
   }
@@ -92,7 +116,7 @@ export const updateUserprofile = async (req, res) => {
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: '1d',
+      expiresIn: "1d",
     });
 
     const savedUserProfile = {
@@ -107,8 +131,8 @@ export const updateUserprofile = async (req, res) => {
 
     res.send({
       success: true,
-      message: 'Profile successfully updated',
-      result: savedUserProfile,    
+      message: "Profile successfully updated",
+      result: savedUserProfile,
     });
   }
 };
