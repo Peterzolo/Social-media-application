@@ -136,7 +136,7 @@ export const deleteUser = async (req, res) => {
         req.body.password = bcrypt.hashSync(req.body.password, 8);
       }
       const deletedUser = await removeUser(id);
-      console.log("UPDATED USER", deletedUser);
+
       res.send({
         success: true,
         message: "Profile successfully updated",
@@ -147,6 +147,31 @@ export const deleteUser = async (req, res) => {
     }
   } catch (error) {
     res.status(500).send(error.message);
+  }
+};
+
+export const postFollowUser = async (req, res) => {
+  const id = req.params.id;
+  const  _id  = req.body._id;
+  console.log(id, _id);
+  if (_id == id) {
+    res.status(403).json({message : "You cannot follow yourself"});
+  } else {
+    try {
+      const followUser = await findUserById(id);
+      const followingUser = await findUserById(_id);
+
+      if (!followUser.followers.includes(_id)) {
+        await followUser.updateOne({ $push: { followers: _id } });
+        await followingUser.updateOne({ $push: { following: id } });
+        res.status(200).json("User followed!");
+      } else {
+        res.status(403).json("you are already following this id");
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error);
+    }
   }
 };
 

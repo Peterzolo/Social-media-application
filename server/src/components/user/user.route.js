@@ -5,6 +5,7 @@ import {
   deleteUser,
   fetchAllUsers,
   fetchUserDetails,
+  postFollowUser,
   register,
   updateUserInfo,
   userLogin,
@@ -26,5 +27,6 @@ userRouter.get("/fetch-one/:id", fetchUserDetails);
 // userRouter.put('/update/profile', protect, updateUserprofile);
 userRouter.put("/update/:id", registeredAndAuthorized, updateUserInfo);
 userRouter.delete("/remove/:id", registeredAndAuthorized, deleteUser);
+userRouter.put("/:id/follow", protect, postFollowUser);
 
 export default userRouter;
