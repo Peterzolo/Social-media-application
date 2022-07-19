@@ -1,4 +1,4 @@
-import Post from './post.model.js';
+import Post from "./post.model.js";
 
 export const savePostPayload = async (args) => {
   const payload = await Post.create(args);
@@ -6,13 +6,19 @@ export const savePostPayload = async (args) => {
 };
 
 export const fetchAllPosts = async () => {
-  const Post = await Post.find({ status: 'active' }).populate("user", "-password");
-  return Post;
+  const post = await Post.find({ status: "active" }).populate(
+    "user",
+    "-password"
+  );
+  return post;
 };
 
 export const findPostById = async (id) => {
-  const Post = await Post.findById({ _id: id, status: 'active' }).populate("user", "-password");
-  return Post;
+  const post = await Post.findById({ _id: id, status: "active" }).populate(
+    "user",
+    "-password"
+  );
+  return post;
 };
 
 // export const findOnePost = async(id) =>{
@@ -21,32 +27,32 @@ export const findPostById = async (id) => {
 // }
 
 export const findPostByName = async (query) => {
-  const Post = await Post.findOne(query).populate("user", "-password");
-  return Post;
+  const post = await Post.findOne(query).populate("user", "-password");
+  return post;
 };
 
-export const updatePost = async (id, PostObj) => {
-  const Post = await Post.findByIdAndUpdate(
+export const updatePost = async (id, postObj) => {
+  const post = await Post.findByIdAndUpdate(
     { _id: id },
-    { $set: PostObj },
+    { $set: postObj },
     { new: true }
   );
-  return Post;
+  return post;
 };
 
 export const deletePost = async (id, userId) => {
-  const Post = await Post.findByIdAndUpdate(
+  const post = await Post.findByIdAndUpdate(
     { _id: id, user: userId },
-    { $set: { status: 'inactive' } },
+    { $set: { status: "inactive" } },
     { new: true }
   );
-  return Post;
+  return post;
 };
 
 export const findPostOwnerById = async (id) => {
-  const Post = await Post.find({ status: 'active', vendor: id }).populate(
-    'user',
-    '-password'
+  const post = await Post.find({ status: "active", vendor: id }).populate(
+    "user",
+    "-password"
   );
-  return Post;
+  return post;
 };

@@ -1,57 +1,42 @@
-import {
-  findProductById,
-  findProductByName,
-  saveProductPayload,
-} from './post.dao.js';
-import ApiError from '../../error/ApiError.js';
+import { findPostById, findPostByName, savePostPayload } from "./post.dao.js";
+import ApiError from "../../error/ApiError.js";
 
-export const createProduct = async ({
+export const createPost = async ({
   title,
+  description,
+  user,
   image,
   cloudinary_id,
-  category,
-  modelNum,
-  color,
-  description,
-  price,
-  brand,
   createdAt,
   status,
 }) => {
-  const productObject = {
+  const postObject = {
     title,
+    description,
+    user,
     image,
     cloudinary_id,
-    category,
-    modelNum,
-    color,
-    description,
-    price,
-    brand,
     createdAt,
     status,
   };
 
-  const productExists = await findProductByName({ title });
+  const postExists = await findPostByName({ title });
 
-  if (productExists) {
+  if (postExists) {
     throw ApiError.alreadyExists({
-      message: 'Product with this title has already been created',
+      message: "Post with this title has already been created",
     });
   }
 
-  const product = await saveProductPayload(productObject);
+  const post = await savePostPayload(postObject);
   return {
     createdAt: new Date().toISOString(),
-    title: product.title,
-    image: product.image,
-    cloudinary_id: product.cloudinary_id,
-    category: product.category,
-    color: product.color,
-    description: product.description,
-    price: product.price,
-    brand: product.brand,
-    status: product.status,
-    _id: product._id,
+    title: post.title,
+    image: post.image,
+    user: post.user,
+    cloudinary_id: post.cloudinary_id,
+    description: post.description,
+    status: post.status,
+    _id: post._id,
   };
 };

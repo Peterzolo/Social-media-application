@@ -1,114 +1,105 @@
 import mongoose from "mongoose";
 import {
-  deleteProduct,
-  fetchAllProducts,
-  findProductById,
-  findProductOwnerById,
-  updateProduct,
+  deletePost,
+  fetchAllPosts,
+  findPostById,
+  findPostOwnerById,
+  updatePost,
 } from "./post.dao.js";
 import ApiError from "../../error/ApiError.js";
-import { findUserById } from "../user/user.dao.js";
-import Product from "./post.model.js";
-import { createProduct } from "./post.service.js";
-import cloudinary from "../../utils/cloudinary.js";
 
-export const postProduct = async (req, res) => {
+import { createPost } from "./post.service.js";
+import cloudinary from "../../utils/cloudinary.js";
+import { findUserById } from "../user/user.dao.js";
+
+export const postPost = async (req, res) => {
   try {
     const {
       title,
+      description,
+      user,
       image,
       cloudinary_id,
-      category,
-      model,
-      color,
-      description,
-      price,
-      brand,
       createdAt,
       status,
     } = req.body;
-
     const userId = req.user;
-
-    if (userId.isAdmin === false) {
-      return res.status(402).send({ message: "You are not authorized" });
-    }
-    const result = await cloudinary.uploader.upload(req.file.path);
-
-    const dataObject = {
-      title,
-      image: result.secure_url,
-      cloudinary_id: result.public_id,
-      category,
-      model,
-      color,
-      description,
-      price,
-      brand,
-      createdAt,
-      status,
-      createdAt: new Date().toString(),
-    };
-    const productData = await createProduct(dataObject);
-    res.status(200).json({
-      success: true,
-      message: "Product successfully created",
-      result: productData,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const getAllProducts = async (req, res) => {
-  try {
-    const allProducts = await fetchAllProducts();
-    if (!allProducts.length) {
-      throw ApiError.notFound({ message: "No Product Found" });
-    }
-    res.status(200).json({
-      numInStock: allProducts.length,
-      success: true,
-      message: "Successfully fetched all products",
-      result: allProducts,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const getOneProduct = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const findProduct = await findProductById(id);
-    if (findProduct) {
-      const product = findProduct;
-      res.status(200).send({
-        Success: true,
-        message: "Product successfully fetched",
-        result: product,
+    const findUser = userId;
+    if (user === findUser._id.toString() || findUser.isAdmin === true) {
+      const result = await cloudinary.uploader.upload(req.file.path);
+      const dataObject = {
+        title,
+        image: result.secure_url,
+        description,
+        user,
+        cloudinary_id: result.public_id,
+        createdAt,
+        status,
+        createdAt: new Date().toString(),
+      };
+      const postData = await createPost(dataObject);
+      res.status(200).json({
+        success: true,
+        message: "Post successfully created",
+        result: postData,
       });
     } else {
-      res.status(401).send({ message: "Product Not Found" });
+      res.send({ message: "You are not authorized" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getAllPosts = async (req, res) => {
+  try {
+    const allPosts = await fetchAllPosts();
+    if (!allPosts.length) {
+      throw ApiError.notFound({ message: "No post Found" });
+    }
+    res.status(200).json({
+      postCount: allPosts.length,
+      success: true,
+      message: "Successfully fetched all posts",
+      result: allPosts,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getOnePost = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const findpost = await findpostById(id);
+    if (findpost) {
+      const post = findpost;
+      res.status(200).send({
+        Success: true,
+        message: "post successfully fetched",
+        result: post,
+      });
+    } else {
+      res.status(401).send({ message: "post Not Found" });
     }
   } catch (error) {
     res.status(400).send({ message: "Error has occured" });
   }
 };
 
-export const editProduct = async (req, res) => {
+export const editPost = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const product = await findProductById(id);
-    console.log("PRODUCT", product);
+    const post = await findPostById(id);
+    console.log("post", post);
 
-    if (product.status === "inactive") {
+    if (post.status === "inactive") {
       throw ApiError.notFound({ message: "Event not found" });
     }
 
     // Delete image from cloudinary
-    await cloudinary.uploader.destroy(product.cloudinary_id);
+    await cloudinary.uploader.destroy(post.cloudinary_id);
     // Upload image to cloudinary
     let result;
     if (req.file) {
@@ -116,27 +107,27 @@ export const editProduct = async (req, res) => {
     }
 
     const data = {
-      title: req.body.title || product.title,
-      category: req.body.category || product.category,
-      color: req.body.color || product.color,
-      price: req.body.price || product.price,
-      brand: req.body.brand || product.brand,
-      description: req.body.description || product.description,
-      title: req.body.title || product.title,
-      image: result?.secure_url || product.image,
-      cloudinary_id: result?.public_id || product.cloudinary_id,
+      title: req.body.title || post.title,
+      category: req.body.category || post.category,
+      color: req.body.color || post.color,
+      price: req.body.price || post.price,
+      brand: req.body.brand || post.brand,
+      description: req.body.description || post.description,
+      title: req.body.title || post.title,
+      image: result?.secure_url || post.image,
+      cloudinary_id: result?.public_id || post.cloudinary_id,
     };
 
     console.log("UPDATE DATA", data);
 
-    let editedProduct = await updateProduct(id, data);
+    let editedpost = await updatePost(id, data);
 
-    if (!editedProduct) {
-      throw ApiError.notFound({ message: "Product not available" });
+    if (!editedpost) {
+      throw ApiError.notFound({ message: "post not available" });
     }
     return res.status(200).send({
-      message: "Product updated successfully",
-      content: editedProduct,
+      message: "post updated successfully",
+      content: editedpost,
       success: true,
     });
   } catch (error) {
@@ -144,7 +135,7 @@ export const editProduct = async (req, res) => {
   }
 };
 
-export const removeProduct = async (req, res) => {
+export const removePost = async (req, res) => {
   try {
     const userId = req.user;
 
@@ -158,102 +149,102 @@ export const removeProduct = async (req, res) => {
       return res.status(404).json({ message: "User doesn't exist" });
     }
 
-    const findProduct = await findProductById(id);
+    const findPost = await findPostById(id);
 
-    if (findProduct.status === "inactive") {
-      throw ApiError.notFound({ message: "Product not available" });
+    if (findPost.status === "inactive") {
+      throw ApiError.notFound({ message: "post not available" });
     }
 
-    await cloudinary.uploader.destroy(findProduct.cloudinary_id);
+    await cloudinary.uploader.destroy(findPost.cloudinary_id);
 
     const query = id;
 
-    let deletedProduct = await deleteProduct(query);
+    let deletedPost = await deletePost(query);
 
-    if (!deletedProduct) {
-      throw ApiError.notFound({ message: "Could not delete product" });
+    if (!deletedPost) {
+      throw ApiError.notFound({ message: "Could not delete post" });
     }
     return res.status(200).send({
       success: true,
-      message: "Product deleted successfully",
-      result: deletedProduct,
+      message: "post deleted successfully",
+      result: deletedPost,
     });
   } catch (error) {
     res.status(400).json(error.message);
   }
 };
 
-export const findProductByVendor = async (req, res) => {
+export const findPostByVendor = async (req, res) => {
   try {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ message: "User doesn't exist" });
     }
-    const userProduct = await findProductOwnerById(id);
-    if (userProduct.length < 1) {
-      throw ApiError.notFound({ message: "Product could not be found" });
+    const userPost = await findPostOwnerById(id);
+    if (userPost.length < 1) {
+      throw ApiError.notFound({ message: "post could not be found" });
     }
     res.status(200).json({
       Success: true,
-      Message: "Product successfully fetched",
-      data: userProduct,
+      Message: "post successfully fetched",
+      data: userPost,
     });
   } catch (error) {
     res.status(500).json(error.message);
   }
 };
 
-// export const searchProductByTitle = async (req, res) => {
+// export const searchpostByTitle = async (req, res) => {
 //   try {
 //     const { searchQuery } = req.query;
 //     const title = new RegExp(searchQuery, "i");
-//     const Products = await fetchAllProducts({ title });
-//     res.status(200).json(Products);
+//     const posts = await fetchAllposts({ title });
+//     res.status(200).json(posts);
 //   } catch (error) {
 //     res.status(500).json(error.message);
 //   }
 // };
 
-export const searchProductByTitle = async (req, res) => {
+export const searchPostByTitle = async (req, res) => {
   const { searchQuery } = req.query;
   try {
     const title = new RegExp(searchQuery, "i");
-    const Products = await Product.find({ title });
-    res.json(Products);
+    const posts = await getAllPosts({ title });
+    res.json(posts);
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });
   }
 };
 
-export const getProductsByTag = async (req, res) => {
+export const getPostsByTag = async (req, res) => {
   const { tag } = req.params;
   try {
-    const Products = await Product.find({ tags: { $in: tag } });
+    const posts = await getAllPosts({ tags: { $in: tag } });
     res.json({
       success: true,
       message: "Successful",
-      data: Products,
+      data: posts,
     });
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });
   }
 };
 
-export const getRelatedProducts = async (req, res) => {
+export const getRelatedPosts = async (req, res) => {
   const tag = req.body;
   try {
-    const Products = await Product.find({ tags: { $in: tag } });
+    const posts = await getAllPosts({ tags: { $in: tag } });
     res.json({
       success: true,
       message: "Successful",
-      data: Products,
+      data: posts,
     });
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });
   }
 };
 
-export const getProductLikes = async (req, res) => {
+export const getPostLikes = async (req, res) => {
   const { id } = req.params;
   try {
     if (!req.userId) {
@@ -261,29 +252,27 @@ export const getProductLikes = async (req, res) => {
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res
-        .status(404)
-        .json({ message: `No Product exist with id: ${id}` });
+      return res.status(404).json({ message: `No post exist with id: ${id}` });
     }
 
-    const Product = await Product.findById(id);
+    const post = await findPostById(id);
 
-    const index = Product.likes.findIndex((id) => id === String(req.userId));
+    const index = post.likes.findIndex((id) => id === String(req.userId));
 
     if (index === -1) {
-      Product.likes.push(req.userId);
+      post.likes.push(req.userId);
     } else {
-      Product.likes = Product.likes.filter((id) => id !== String(req.userId));
+      post.likes = post.likes.filter((id) => id !== String(req.userId));
     }
 
-    const updatedProduct = await Product.findByIdAndUpdate(id, Product, {
+    const updatedpost = await updatePost(id, post, {
       new: true,
     });
 
     res.status(200).json({
       success: true,
       message: "Successfully liked",
-      data: updatedProduct,
+      data: updatedpost,
     });
   } catch (error) {
     res.status(404).json({ message: error.message });

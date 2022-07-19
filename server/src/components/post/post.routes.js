@@ -1,28 +1,28 @@
 import express from 'express';
 // import upload from "../../utils/multer.js"
 
-const productRouter = express.Router();
+const postRouter = express.Router();
 
 import {
-  editProduct,
-  getAllProducts,
-  getProductLikes,
-  getOneProduct,
-  getRelatedProducts,
-  postProduct,
-  removeProduct,
-  searchProductByTitle,
-} from './product.controller.js';
+  editPost,
+  getAllPosts,
+  getPostLikes,
+  getOnePost,
+  getRelatedPosts,
+  postPost,
+  removePost,
+  searchPostByTitle,
+} from './post.controller.js';
 import { authorizedAndAdmin, protect } from '../../middleware/auth2.js';
 import { upload } from '../../utils/multer.js';
 
-productRouter.post('/create', authorizedAndAdmin,upload.single("image"), postProduct);
-productRouter.get('/fetch-all', getAllProducts);
-productRouter.get('/fetch-one/:id', getOneProduct);
-productRouter.put('/edit/:id',upload.single("image"), authorizedAndAdmin, editProduct);
-productRouter.delete('/remove/:id', authorizedAndAdmin, removeProduct);
-productRouter.get('/search', searchProductByTitle);
-productRouter.post('/related-products', getRelatedProducts);
-productRouter.patch('/like/:id', getProductLikes);
+postRouter.post('/create', authorizedAndAdmin,upload.single("file"), postPost);
+postRouter.get('/fetch-all', getAllPosts);
+postRouter.get('/fetch-one/:id', getOnePost);
+postRouter.put('/edit/:id',upload.single("image"), authorizedAndAdmin, editPost);
+postRouter.delete('/remove/:id', authorizedAndAdmin, removePost);
+postRouter.get('/search', searchPostByTitle);
+postRouter.post('/related-posts', getRelatedPosts);
+postRouter.patch('/like/:id', getPostLikes);
 
-export default productRouter;
+export default postRouter;
