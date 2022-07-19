@@ -11,6 +11,7 @@ import ApiError from "../../error/ApiError.js";
 import { createPost } from "./post.service.js";
 import cloudinary from "../../utils/cloudinary.js";
 import { findUserById } from "../user/user.dao.js";
+import User from "../user/user.model.js";
 
 export const postPost = async (req, res) => {
   try {
@@ -296,6 +297,47 @@ export const likePost = async (req, res) => {
       await post.updateOne({ $push: { likes: userId } });
       res.status(200).json({ message: "Post liked" });
     }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+
+export const getTimelinePosts = async (req, res) => {
+  const userId = req.params.id
+  try {
+    const currentUserPosts = await fetchAllPosts({ user: userId });
+    console.log('CURRENT POST',currentUserPosts)
+
+    const followingPosts = await User.aggregate([
+      { 
+        $match: {
+          _id: new mongoose.Types.ObjectId(userId),
+        },
+      },
+      {
+        $lookup: {
+          from: "posts",
+          localField: "following",
+          foreignField: "userId",
+          as: "followingPosts",
+        },
+      },
+      {
+        $project: {
+          followingPosts: 1,
+          _id: 0,
+        },
+      },
+    ]);
+
+    res.status(200).json(
+      currentUserPosts
+        .concat(...followingPosts[0].followingPosts)
+        .sort((a, b) => {
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        })
+    );
   } catch (error) {
     res.status(500).json(error);
   }

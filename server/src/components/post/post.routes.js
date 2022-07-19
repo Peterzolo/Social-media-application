@@ -7,6 +7,7 @@ import {
   getAllPosts,
   // getPostLikes,
   getOnePost,
+  getTimelinePosts,
   likePost,
   // getRelatedPosts,
   postPost,
@@ -28,7 +29,7 @@ postRouter.put(
 );
 postRouter.delete("/remove/:id", authorizedAndAdmin, removePost);
 postRouter.get("/search", searchPostByTitle);
-postRouter.put("/:id/like", protect , likePost);
-
+postRouter.put("/:id/like", protect, likePost);
+postRouter.get("/:id/timeline", protect, getTimelinePosts);
 
 export default postRouter;
