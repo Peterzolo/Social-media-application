@@ -97,26 +97,34 @@ export const updateUserInfo = async (req, res) => {
   const id = req.params.id;
   const userId = req.user;
   const updateObj = req.body;
-  console.log("ID", id)
-  console.log("USER", userId)
-
-  const user = await findUserById(userId);
+  console.log("ID",typeof id)
+  console.log("USER",typeof userId)
+  try {
+    const user = await findUserById(userId);
+    console.log('USER----',user)
   
-  if(id !== user._id || user.isAdmin !== true){
-    throw ApiError.forbidden({message : "You are not authorized"})
+    if(id === user._id.toString() || user.isAdmin === true){
+      if (req.body.password) {
+        req.body.password = bcrypt.hashSync(req.body.password, 8);
+      }
+      const updatedUser = await editUserInfo(id, updateObj);
+      console.log("UPDATED USER", updatedUser);
+    
+      res.send({
+        success: true,
+        message: "Profile successfully updated",
+        result: updatedUser,
+      });
+    }else{
+      throw ApiError.forbidden({message : "You are not authorized"})
+    }
+  
+
+  } catch (error) {
+    res.status(500).send(error.message)
   }
 
-  if (req.body.password) {
-    req.body.password = bcrypt.hashSync(req.body.password, 8);
-  }
-  const updatedUser = await editUserInfo(id, updateObj);
-  console.log("UPDATED USER", updatedUser);
 
-  res.send({
-    success: true,
-    message: "Profile successfully updated",
-    result: updatedUser,
-  });
 };
 
 // export const updateUserprofile = async (req, res) => {
