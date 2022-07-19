@@ -5,9 +5,10 @@ const postRouter = express.Router();
 
 import {
   getAllPosts,
-  getPostLikes,
+  // getPostLikes,
   getOnePost,
-  getRelatedPosts,
+  likePost,
+  // getRelatedPosts,
   postPost,
   removePost,
   searchPostByTitle,
@@ -27,7 +28,7 @@ postRouter.put(
 );
 postRouter.delete("/remove/:id", authorizedAndAdmin, removePost);
 postRouter.get("/search", searchPostByTitle);
-postRouter.post("/related-posts", getRelatedPosts);
-postRouter.patch("/like/:id", getPostLikes);
+postRouter.put("/:id/like", protect , likePost);
+
 
 export default postRouter;

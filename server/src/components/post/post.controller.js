@@ -100,7 +100,7 @@ export const updateAPost = async (req, res) => {
 
     const post = await findPostById(id);
 
-    if (post.user._id === user._id || user.isAdmin === true) {
+    if (post.user._id.toString() === user._id || user.isAdmin === true) {
       if (post.status === "inactive") {
         throw ApiError.notFound({ message: "Post not found" });
       }
@@ -138,20 +138,19 @@ export const updateAPost = async (req, res) => {
     res.status(400).json(error.message);
   }
 };
- 
+
 export const removePost = async (req, res) => {
   try {
     const id = req.params.id;
     const userId = req.user;
-   
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ message: "User doesn't exist" });
     }
     const findPost = await findPostById(id);
 
-    console.log("UserId", typeof userId._id)
-    console.log("Find Post",typeof findPost.user._id )
+    console.log("UserId", typeof userId._id);
+    console.log("Find Post", typeof findPost.user._id);
 
     if (findPost.user._id.toString() === userId._id) {
       if (findPost.status === "inactive") {
@@ -221,65 +220,83 @@ export const searchPostByTitle = async (req, res) => {
   }
 };
 
-export const getPostsByTag = async (req, res) => {
-  const { tag } = req.params;
+// export const getPostsByTag = async (req, res) => {
+//   const { tag } = req.params;
+//   try {
+//     const posts = await getAllPosts({ tags: { $in: tag } });
+//     res.json({
+//       success: true,
+//       message: "Successful",
+//       data: posts,
+//     });
+//   } catch (error) {
+//     res.status(404).json({ message: "Something went wrong" });
+//   }
+// };
+
+// export const getRelatedPosts = async (req, res) => {
+//   const tag = req.body;
+//   try {
+//     const posts = await getAllPosts({ tags: { $in: tag } });
+//     res.json({
+//       success: true,
+//       message: "Successful",
+//       data: posts,
+//     });
+//   } catch (error) {
+//     res.status(404).json({ message: "Something went wrong" });
+//   }
+// };
+
+// export const getPostLikes = async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     if (!req.userId) {
+//       return res.json({ message: "User is not authenticated" });
+//     }
+
+//     if (!mongoose.Types.ObjectId.isValid(id)) {
+//       return res.status(404).json({ message: `No post exist with id: ${id}` });
+//     }
+
+//     const post = await findPostById(id);
+
+//     const index = post.likes.findIndex((id) => id === String(req.userId));
+
+//     if (index === -1) {
+//       post.likes.push(req.userId);
+//     } else {
+//       post.likes = post.likes.filter((id) => id !== String(req.userId));
+//     }
+
+//     const updatedpost = await updatePost(id, post, {
+//       new: true,
+//     });
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Successfully liked",
+//       data: updatedpost,
+//     });
+//   } catch (error) {
+//     res.status(404).json({ message: error.message });
+//   }
+// };
+
+export const likePost = async (req, res) => {
+  const id = req.params.id;
+  const { userId } = req.body;
+
   try {
-    const posts = await getAllPosts({ tags: { $in: tag } });
-    res.json({
-      success: true,
-      message: "Successful",
-      data: posts,
-    });
-  } catch (error) {
-    res.status(404).json({ message: "Something went wrong" });
-  }
-};
-
-export const getRelatedPosts = async (req, res) => {
-  const tag = req.body;
-  try {
-    const posts = await getAllPosts({ tags: { $in: tag } });
-    res.json({
-      success: true,
-      message: "Successful",
-      data: posts,
-    });
-  } catch (error) {
-    res.status(404).json({ message: "Something went wrong" });
-  }
-};
-
-export const getPostLikes = async (req, res) => {
-  const { id } = req.params;
-  try {
-    if (!req.userId) {
-      return res.json({ message: "User is not authenticated" });
-    }
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).json({ message: `No post exist with id: ${id}` });
-    }
-
     const post = await findPostById(id);
-
-    const index = post.likes.findIndex((id) => id === String(req.userId));
-
-    if (index === -1) {
-      post.likes.push(req.userId);
+    if (post.likes.includes(userId)) {
+      await post.updateOne({ $pull: { likes: userId } });
+      res.status(200).json({ message: "Post disliked" });
     } else {
-      post.likes = post.likes.filter((id) => id !== String(req.userId));
+      await post.updateOne({ $push: { likes: userId } });
+      res.status(200).json({ message: "Post liked" });
     }
-
-    const updatedpost = await updatePost(id, post, {
-      new: true,
-    });
-
-    res.status(200).json({
-      success: true,
-      message: "Successfully liked",
-      data: updatedpost,
-    });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json(error);
   }
 };
