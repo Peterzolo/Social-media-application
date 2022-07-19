@@ -94,11 +94,13 @@ export const updateAPost = async (req, res) => {
     const { id } = req.params;
     const user = req.user;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ message: "Invalid Post  id" });
+    }
+
     const post = await findPostById(id);
 
     if (post.user._id === user._id || user.isAdmin === true) {
-      console.log("post", post);
-
       if (post.status === "inactive") {
         throw ApiError.notFound({ message: "Post not found" });
       }
@@ -115,7 +117,7 @@ export const updateAPost = async (req, res) => {
         description: req.body.description || post.description,
         title: req.body.title || post.title,
         image: result?.secure_url || post.image,
-        user: post.user,
+        // user: post.user,
         cloudinary_id: result?.public_id || post.cloudinary_id,
       };
 
@@ -136,41 +138,42 @@ export const updateAPost = async (req, res) => {
     res.status(400).json(error.message);
   }
 };
-
+ 
 export const removePost = async (req, res) => {
   try {
-    const userId = req.user;
-
-    if (userId.isAdmin === false) {
-      return res.status(402).send({ message: "You are not authorized" });
-    }
-
     const id = req.params.id;
+    const userId = req.user;
+   
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ message: "User doesn't exist" });
     }
-
     const findPost = await findPostById(id);
 
-    if (findPost.status === "inactive") {
-      throw ApiError.notFound({ message: "post not available" });
+    console.log("UserId", typeof userId._id)
+    console.log("Find Post",typeof findPost.user._id )
+
+    if (findPost.user._id.toString() === userId._id) {
+      if (findPost.status === "inactive") {
+        throw ApiError.notFound({ message: "post not available" });
+      }
+      await cloudinary.uploader.destroy(findPost.cloudinary_id);
+
+      const query = id;
+
+      let deletedPost = await deletePost(query);
+
+      if (!deletedPost) {
+        throw ApiError.notFound({ message: "Could not delete post" });
+      }
+      return res.status(200).send({
+        success: true,
+        message: "post deleted successfully",
+        result: deletedPost,
+      });
+    } else {
+      res.status(403).send({ message: "Not allowed" });
     }
-
-    await cloudinary.uploader.destroy(findPost.cloudinary_id);
-
-    const query = id;
-
-    let deletedPost = await deletePost(query);
-
-    if (!deletedPost) {
-      throw ApiError.notFound({ message: "Could not delete post" });
-    }
-    return res.status(200).send({
-      success: true,
-      message: "post deleted successfully",
-      result: deletedPost,
-    });
   } catch (error) {
     res.status(400).json(error.message);
   }
