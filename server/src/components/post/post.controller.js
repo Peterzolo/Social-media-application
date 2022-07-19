@@ -89,49 +89,49 @@ export const getOnePost = async (req, res) => {
   }
 };
 
-export const editPost = async (req, res) => {
+export const updateAPost = async (req, res) => {
   try {
     const { id } = req.params;
+    const user = req.user;
 
     const post = await findPostById(id);
-    console.log("post", post);
 
-    if (post.status === "inactive") {
-      throw ApiError.notFound({ message: "Event not found" });
+    if (post.user._id === user._id || user.isAdmin === true) {
+      console.log("post", post);
+
+      if (post.status === "inactive") {
+        throw ApiError.notFound({ message: "Post not found" });
+      }
+
+      // Delete image from cloudinary
+      await cloudinary.uploader.destroy(post.cloudinary_id);
+      // Upload image to cloudinary
+      let result;
+      if (req.file) {
+        result = await cloudinary.uploader.upload(req.file.path);
+      }
+      const data = {
+        title: req.body.title || post.title,
+        description: req.body.description || post.description,
+        title: req.body.title || post.title,
+        image: result?.secure_url || post.image,
+        user: post.user,
+        cloudinary_id: result?.public_id || post.cloudinary_id,
+      };
+
+      let editedPost = await updatePost(id, data);
+
+      if (!editedPost) {
+        throw ApiError.notFound({ message: "post not available" });
+      }
+      return res.status(200).send({
+        message: "post updated successfully",
+        content: editedPost,
+        success: true,
+      });
+    } else {
+      res.status(403).send({ message: "You are not authorized" });
     }
-
-    // Delete image from cloudinary
-    await cloudinary.uploader.destroy(post.cloudinary_id);
-    // Upload image to cloudinary
-    let result;
-    if (req.file) {
-      result = await cloudinary.uploader.upload(req.file.path);
-    }
-
-    const data = {
-      title: req.body.title || post.title,
-      category: req.body.category || post.category,
-      color: req.body.color || post.color,
-      price: req.body.price || post.price,
-      brand: req.body.brand || post.brand,
-      description: req.body.description || post.description,
-      title: req.body.title || post.title,
-      image: result?.secure_url || post.image,
-      cloudinary_id: result?.public_id || post.cloudinary_id,
-    };
-
-    console.log("UPDATE DATA", data);
-
-    let editedpost = await updatePost(id, data);
-
-    if (!editedpost) {
-      throw ApiError.notFound({ message: "post not available" });
-    }
-    return res.status(200).send({
-      message: "post updated successfully",
-      content: editedpost,
-      success: true,
-    });
   } catch (error) {
     res.status(400).json(error.message);
   }
