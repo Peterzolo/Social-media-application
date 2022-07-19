@@ -7,6 +7,7 @@ import {
   fetchUserDetails,
   postFollowUser,
   register,
+  unfollowUser,
   updateUserInfo,
   userLogin,
 } from "./user.controller.js";
@@ -28,5 +29,6 @@ userRouter.get("/fetch-one/:id", fetchUserDetails);
 userRouter.put("/update/:id", registeredAndAuthorized, updateUserInfo);
 userRouter.delete("/remove/:id", registeredAndAuthorized, deleteUser);
 userRouter.put("/:id/follow", protect, postFollowUser);
+userRouter.put("/:id/unfollow", protect, unfollowUser);
 
 export default userRouter;
