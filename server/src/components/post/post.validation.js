@@ -1,6 +1,6 @@
 import { check, validationResult } from "express-validator";
 
-export const validateEventData = [
+export const validatePostData = [
   check("title")
     .trim()
     .not()
@@ -9,22 +9,12 @@ export const validateEventData = [
     .isLength({ min: 2, max: 200 })
     .withMessage("Title must be between 2 and 20 characters long"),
 
-  check("vendor")
-    .trim()
-    .not()
-    .isEmpty()
-    .withMessage("Title field cannot be empty"),
-
   check("description")
     .trim()
     .not()
     .isEmpty()
     .withMessage("Description field cannot be empty"),
-  check("phone")
-    .trim()
-    .not()
-    .isEmpty()
-    .withMessage("Phone field cannot be empty"),
+ 
 ];
 
 export const validate = (req, res, next) => {

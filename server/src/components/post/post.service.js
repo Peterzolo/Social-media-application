@@ -2,7 +2,7 @@ import {
   findProductById,
   findProductByName,
   saveProductPayload,
-} from './product.dao.js';
+} from './post.dao.js';
 import ApiError from '../../error/ApiError.js';
 
 export const createProduct = async ({

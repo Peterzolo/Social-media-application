@@ -5,11 +5,11 @@ import {
   findProductById,
   findProductOwnerById,
   updateProduct,
-} from "./product.dao.js";
+} from "./post.dao.js";
 import ApiError from "../../error/ApiError.js";
 import { findUserById } from "../user/user.dao.js";
-import Product from "./product.model.js";
-import { createProduct } from "./product.service.js";
+import Product from "./post.model.js";
+import { createProduct } from "./post.service.js";
 import cloudinary from "../../utils/cloudinary.js";
 
 export const postProduct = async (req, res) => {
