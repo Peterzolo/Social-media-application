@@ -2,6 +2,7 @@ import express from "express";
 const userRouter = express.Router();
 
 import {
+  deleteUser,
   fetchAllUsers,
   fetchUserDetails,
   register,
@@ -24,5 +25,6 @@ userRouter.get("/fetch-all", fetchAllUsers);
 userRouter.get("/fetch-one/:id", fetchUserDetails);
 // userRouter.put('/update/profile', protect, updateUserprofile);
 userRouter.put("/update/:id", registeredAndAuthorized, updateUserInfo);
+userRouter.delete("/remove/:id", registeredAndAuthorized, deleteUser);
 
 export default userRouter;

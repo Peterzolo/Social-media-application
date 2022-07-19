@@ -1,4 +1,9 @@
-import { editUserInfo, findAllUsers, findUserById } from "./user.dao.js";
+import {
+  editUserInfo,
+  findAllUsers,
+  findUserById,
+  removeUser,
+} from "./user.dao.js";
 import { createUser, signIn } from "./user.service.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
@@ -97,34 +102,52 @@ export const updateUserInfo = async (req, res) => {
   const id = req.params.id;
   const userId = req.user;
   const updateObj = req.body;
-  console.log("ID",typeof id)
-  console.log("USER",typeof userId)
+
   try {
     const user = await findUserById(userId);
-    console.log('USER----',user)
-  
-    if(id === user._id.toString() || user.isAdmin === true){
+
+    if (id === user._id.toString() || user.isAdmin === true) {
       if (req.body.password) {
         req.body.password = bcrypt.hashSync(req.body.password, 8);
       }
       const updatedUser = await editUserInfo(id, updateObj);
-      console.log("UPDATED USER", updatedUser);
-    
+
       res.send({
         success: true,
         message: "Profile successfully updated",
         result: updatedUser,
       });
-    }else{
-      throw ApiError.forbidden({message : "You are not authorized"})
+    } else {
+      throw ApiError.forbidden({ message: "You are not authorized" });
     }
-  
-
   } catch (error) {
-    res.status(500).send(error.message)
+    res.status(500).send(error.message);
   }
+};
+export const deleteUser = async (req, res) => {
+  const id = req.params.id;
+  const userId = req.user;
 
+  try {
+    const user = await findUserById(userId);
 
+    if (id === user._id.toString() || user.isAdmin === true) {
+      if (req.body.password) {
+        req.body.password = bcrypt.hashSync(req.body.password, 8);
+      }
+      const deletedUser = await removeUser(id);
+      console.log("UPDATED USER", deletedUser);
+      res.send({
+        success: true,
+        message: "Profile successfully updated",
+        result: deletedUser,
+      });
+    } else {
+      throw ApiError.forbidden({ message: "You are not authorized" });
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
 // export const updateUserprofile = async (req, res) => {
