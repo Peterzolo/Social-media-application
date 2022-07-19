@@ -6,6 +6,7 @@ export const createPost = async ({
   description,
   user,
   image,
+  likes,
   cloudinary_id,
   createdAt,
   status,
@@ -15,6 +16,7 @@ export const createPost = async ({
     description,
     user,
     image,
+    likes,
     cloudinary_id,
     createdAt,
     status,
@@ -36,6 +38,7 @@ export const createPost = async ({
     user: post.user,
     cloudinary_id: post.cloudinary_id,
     description: post.description,
+    likes: post.likes,
     status: post.status,
     _id: post._id,
   };

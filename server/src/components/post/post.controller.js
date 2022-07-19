@@ -17,6 +17,7 @@ export const postPost = async (req, res) => {
     const {
       title,
       description,
+      likes,
       user,
       image,
       cloudinary_id,
@@ -31,6 +32,7 @@ export const postPost = async (req, res) => {
         title,
         image: result.secure_url,
         description,
+        likes,
         user,
         cloudinary_id: result.public_id,
         createdAt,
@@ -55,7 +57,7 @@ export const getAllPosts = async (req, res) => {
   try {
     const allPosts = await fetchAllPosts();
     if (!allPosts.length) {
-      throw ApiError.notFound({ message: "No post Found" });
+      throw ApiError.notFound("No post Found");
     }
     res.status(200).json({
       postCount: allPosts.length,
@@ -71,16 +73,16 @@ export const getAllPosts = async (req, res) => {
 export const getOnePost = async (req, res) => {
   try {
     const id = req.params.id;
-    const findpost = await findpostById(id);
-    if (findpost) {
-      const post = findpost;
+    const findPost = await findPostById(id);
+    if (findPost) {
+      const post = findPost;
       res.status(200).send({
         Success: true,
         message: "post successfully fetched",
         result: post,
       });
     } else {
-      res.status(401).send({ message: "post Not Found" });
+      res.status(401).send({ message: "Post Not Found" });
     }
   } catch (error) {
     res.status(400).send({ message: "Error has occured" });
