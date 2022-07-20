@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import "../auth/Auth.css";
+import { loginAction, signUpAction } from "../../../redux/actions/authActions";
 const initialState = {
   firstName: "",
   lastName: "",
@@ -52,7 +53,7 @@ const Auth = () => {
       setFormData(initialState);
     } else {
       if (username && password) {
-        dispatch(logInAction({ formData, navigate,toast }));
+        dispatch(loginAction({ formData, navigate,toast }));
       }
     }
 
