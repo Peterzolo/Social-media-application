@@ -1,27 +1,41 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {useDispatch} from "react-redux"
+import { toast } from "react-toastify";
 import { Boostar101Logo } from "../../../../data/followers";
+import { loginAction } from "../../../../redux/actions/authActions";
 import "../login/Login.css";
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  username: "",
+  password: "",
+  confirmPassword: ""
+};
+
 const Login = () => {
-  const [form, setForm] = useState({
-    firstName,
-    lastName,
-    email,
-    username,
-    password,
-    confirmPassword
-  });
-  const {
-    firstName,
-    lastName,
-    email,
-    username,
-    password,
-    confirmPassword
-  } = form;
-  const handleChange = () => {};
-  const handleFormSubmit = () => {};
+  const [formData, setFormData] = useState(initialState);
+  const { email, password } = formData;
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleChange = e => {
+    let { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFormSubmit = e => {
+    e.preventDefault();
+
+    if (email && password) {
+      dispatch(loginAction({ formData, navigate, toast }));
+    }
+  };
+
   return (
     <div className="container px-4">
       <div

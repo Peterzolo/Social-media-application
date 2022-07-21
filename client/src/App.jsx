@@ -8,19 +8,52 @@ import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./componments/screens/user/login/Login";
 import Register from "./componments/screens/user/register/Register";
+import { useSelector } from "react-redux";
 
 const App = () => {
+  const userSignUp = useSelector(state => state.userRegister.userInfo);
+
+  const user = userSignUp;
+  console.log("USER INFOR", user);
   return (
     <div className="App">
       {/* <div className="blur" style={{ top: "-18%", right: "0" }}></div>
       <div className="blur" style={{ top: "-36%", left: "-8" }}></div> */}
       <ToastContainer draggable={false} transition={Zoom} autoClose={3000} />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<ProfileMain />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route
+          path="/"
+          element={user ? <Navigate to="home" /> : <Navigate to="login" />}
+        />
+        <Route
+          path="/home"
+          element={user ? <Home /> : <Navigate to="../login" />}
+        />
+        <Route
+          path="/login"
+          element={user ? <Navigate to="../home" /> : <Login />}
+        />
+        <Route
+          path="/register"
+          element={user ? <Navigate to="../home" /> : <Register />}
+        />
+        {/* <Route
+          path="/profile/:id"
+          element={user ? <Profile /> : <Navigate to="../auth" />}
+        /> */}
+        {/* <Route
+          path="*"
+          element={
+            <main style={{ padding: "1rem" }}>
+              <p>There's nothing here!</p>
+            </main>
+          }
+        /> */}
+
+        {/* <Route
+          path="/chat"
+          element={user ? <Chat /> : <Navigate to="../auth" />}
+        /> */}
       </Routes>
     </div>
   );

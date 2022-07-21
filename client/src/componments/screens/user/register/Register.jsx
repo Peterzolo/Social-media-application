@@ -1,18 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Boostar101Logo } from "../../../../data/followers";
-import { Link } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams
+} from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpAction } from "../../../../redux/actions/authActions";
+import Spinner from "../../../pages/spinner/Spinner";
 import "../register/Register.css";
+import MessageBox from "../../../pages/message-box/MessageBox";
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  username: "",
+  password: "",
+  confirmPassword: ""
+};
 
 const Register = () => {
-  const [form, setForm] = useState({
-    firstName,
-    lastName,
-    email,
-    username,
-    password,
-    confirmPassword
-  });
+  const [formData, setFormDate] = useState(initialState);
   const {
     firstName,
     lastName,
@@ -20,11 +32,60 @@ const Register = () => {
     username,
     password,
     confirmPassword
-  } = form;
-  const handleChange = () => {};
-  const handleFormSubmit = () => {};
+  } = formData;
+
+  const userSignUp = useSelector(state => state.userRegister);
+  const { userInfo, isLoading, error } = userSignUp;
+  const newUserInfo = userInfo && userInfo.result;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  if (isLoading) {
+    return isLoading && <Spinner></Spinner>;
+  }
+
+  const handleChange = e => {
+    let { name, value } = e.target;
+    setFormDate({ ...formData, [name]: value });
+  };
+
+  const handleFormSubmit = e => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      return toast.error("Password not matched");
+    } else {
+      if (
+        firstName &&
+        lastName &&
+        email &&
+        username &&
+        password &&
+        confirmPassword
+      ) {
+        dispatch(signUpAction(formData));
+        toast.success("User successfully created");
+        setFormDate(initialState);
+        navigate("/login");
+      }
+    }
+  };
+
+  const { search } = useLocation();
+  const redirectInUrl = new URLSearchParams(search).get("redirect");
+  const redirect = redirectInUrl ? redirectInUrl : "/";
+
+  console.log("NEW USER INFO", newUserInfo);
+
+  useEffect(() => {
+    if (newUserInfo) {
+      navigate(redirect);
+    }
+  }, [navigate, redirect, newUserInfo]);
+
   return (
     <div className="container px-4">
+      {/* {error && ( <div> {error}</div> )} */}
       <div
         className="row"
         style={{
@@ -67,7 +128,9 @@ const Register = () => {
           }}
         >
           <form className="infoForm" onSubmit={handleFormSubmit}>
-            <div className="sign-up"><h3>Sign Up</h3> </div>
+            <div className="sign-up">
+              <h3> Sign Up</h3>{" "}
+            </div>
             <div className="row">
               <div className="col-md-6">
                 {" "}
@@ -78,7 +141,7 @@ const Register = () => {
                     type="text"
                     placeholder="First Name"
                     className="infoInput"
-                    name="firstname"
+                    name="firstName"
                     value={firstName}
                     onChange={handleChange}
                   />
@@ -93,7 +156,7 @@ const Register = () => {
                     type="text"
                     placeholder="Last Name"
                     className="infoInput"
-                    name="lastname"
+                    name="lastName"
                     value={lastName}
                     onChange={handleChange}
                   />
@@ -119,7 +182,7 @@ const Register = () => {
               <div className="col-md-6">
                 <div className="input-container">
                   <input
-                    required
+                    // required
                     type="text"
                     placeholder="User Name"
                     className="infoInput"

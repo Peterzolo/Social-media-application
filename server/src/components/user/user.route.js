@@ -13,13 +13,13 @@ import {
 } from "./user.controller.js";
 import { protect, registeredAndAuthorized } from "../../middleware/auth2.js";
 import { validate, validateRegister } from "./user.validator.js";
-import { upload } from "../../utils/multer.js";
+// import { upload } from "../../utils/multer.js";
 
 userRouter.post(
   "/register",
-  upload.single("profilePicture"),
-  validateRegister,
-  validate,
+  // upload.single("profilePicture"),
+  // validateRegister,
+  // validate,
   register
 );
 userRouter.post("/login", userLogin);

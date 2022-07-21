@@ -13,18 +13,11 @@ import ApiError from "../../error/ApiError.js";
 export const register = async (req, res) => {
   const body = req.body;
   try {
-    const result = await cloudinary.uploader.upload(req.file.path);
+    // const result = await cloudinary.uploader.upload(req.file.path);
 
-    //   app.get('/api/images', async (req, res) => {
-    //     const { resources } = await cloudinary.search
-    //         .expression('folder:cloudinary_react')
-    //         .sort_by('public_id', 'desc')
-    //         .max_results(30)
-    //         .execute();
-
-    //     const publicIds = resources.map((file) => file.public_id);
-    //     res.send(publicIds);
-    // });
+    // if(profilePicture){
+    //  return profilePicture = result.secure_url
+    // }
 
     const userObject = {
       firstName: body.firstName,
@@ -32,9 +25,8 @@ export const register = async (req, res) => {
       username: body.username,
       email: body.email,
       password: body.password,
-      cloudinary_id: result.public_id,
-      profilePicture: result.secure_url,
-      coverPicture: result.secure_url,
+      // cloudinary_id: result.public_id,
+      // coverPicture: result.secure_url,
       about: body.about,
       livesIn: body.livesIn,
       worksAt: body.worksAt,
