@@ -1,20 +1,25 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./App.css";
 import Home from "./componments/pages/home/Home";
 import Auth from "./componments/screens/auth/Auth";
 import ProfileMain from "./componments/screens/profileScreen/Profile-main/ProfileMain";
-import { ToastContainer, Zoom } from "react-toastify";
+import { toast, ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./componments/screens/user/login/Login";
 import Register from "./componments/screens/user/register/Register";
 import { useSelector } from "react-redux";
 
 const App = () => {
-  const userSignUp = useSelector(state => state.userRegister.userInfo);
+  const navigate = useNavigate()
+  const userSignIn = useSelector(state => state.userAuth);
+  const { userInfo,isLoading, error } = userSignIn;
 
-  const user = userSignUp;
-  console.log("USER INFOR", user);
+  const user = userInfo;
+
+ 
+  console.log("USER INFORmation", user);
   return (
     <div className="App">
       {/* <div className="blur" style={{ top: "-18%", right: "0" }}></div>
@@ -37,10 +42,10 @@ const App = () => {
           path="/register"
           element={user ? <Navigate to="../home" /> : <Register />}
         />
-        {/* <Route
+        <Route
           path="/profile/:id"
-          element={user ? <Profile /> : <Navigate to="../auth" />}
-        /> */}
+          element={user ? <ProfileMain /> : <Navigate to="../login" />}
+        />
         {/* <Route
           path="*"
           element={

@@ -36,7 +36,13 @@ const Register = () => {
 
   const userSignUp = useSelector(state => state.userRegister);
   const { userInfo, isLoading, error } = userSignUp;
-  const newUserInfo = userInfo && userInfo.result;
+  // const newUserInfo = userInfo && userInfo.result;
+
+ const user  =  userInfo;
+
+ console.log('USER',user)
+
+ 
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,6 +50,16 @@ const Register = () => {
   if (isLoading) {
     return isLoading && <Spinner></Spinner>;
   }
+  // if (error) {
+  //   toast.error(error)
+  //   navigate('/login')
+  // }
+
+  // useEffect(() => {
+    
+  //   error && toast.error(error);
+  //   console.log('ERROR',error)
+  // }, [error]);
 
   const handleChange = e => {
     let { name, value } = e.target;
@@ -71,21 +87,18 @@ const Register = () => {
     }
   };
 
-  const { search } = useLocation();
-  const redirectInUrl = new URLSearchParams(search).get("redirect");
-  const redirect = redirectInUrl ? redirectInUrl : "/";
+  // const { search } = useLocation();
+  // const redirectInUrl = new URLSearchParams(search).get("redirect");
+  // const redirect = redirectInUrl ? redirectInUrl : "/";
 
-  console.log("NEW USER INFO", newUserInfo);
-
-  useEffect(() => {
-    if (newUserInfo) {
-      navigate(redirect);
-    }
-  }, [navigate, redirect, newUserInfo]);
+  // useEffect(() => {
+  //   if (newUserInfo) {
+  //     navigate(redirect);
+  //   }
+  // }, [navigate, redirect, newUserInfo]);
 
   return (
     <div className="container px-4">
-      {/* {error && ( <div> {error}</div> )} */}
       <div
         className="row"
         style={{
@@ -94,7 +107,8 @@ const Register = () => {
           justifyContent: "center",
           height: "100vh"
         }}
-      >
+        >
+        {error && ( <div> {error}</div> )}
         <div
           className="col-md-6"
           style={{

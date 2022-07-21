@@ -1,40 +1,53 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import {useDispatch} from "react-redux"
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Boostar101Logo } from "../../../../data/followers";
 import { loginAction } from "../../../../redux/actions/authActions";
 import "../login/Login.css";
+import { Spinner } from "react-bootstrap";
 
 const initialState = {
-  firstName: "",
-  lastName: "",
   email: "",
-  username: "",
-  password: "",
-  confirmPassword: ""
+  password: ""
 };
 
 const Login = () => {
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormDate] = useState(initialState);
   const { email, password } = formData;
-
-  const navigate = useNavigate();
+  const userSignIn = useSelector(state => state.userAuth);
+  const { userInfo, isLoading, error } = userSignIn;
+  const newUserInfo = userInfo;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
 
   const handleChange = e => {
     let { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormDate({ ...formData, [name]: value });
   };
 
   const handleFormSubmit = e => {
     e.preventDefault();
-
     if (email && password) {
-      dispatch(loginAction({ formData, navigate, toast }));
+      dispatch(loginAction(formData));
+      toast.success("Login successful")
+      navigate("/home")
     }
   };
+
+  const { search } = useLocation();
+  const redirectInUrl = new URLSearchParams(search).get("redirect");
+  const redirect = redirectInUrl ? redirectInUrl : "/";
+
+
+
+  useEffect(() => {
+    if (newUserInfo) {
+      navigate(redirect);
+    }
+  }, [navigate, redirect, newUserInfo]);
 
   return (
     <div className="container px-4">

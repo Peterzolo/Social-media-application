@@ -8,7 +8,7 @@ import {
 } from "../../constant/authConstants";
 
 export const authReducer = (
-  state = { authData: null, isLoading: false, error: false },
+  state = { userInfo: null, isLoading: false, error: false },
   action
 ) => {
   switch (action.type) {
@@ -16,7 +16,7 @@ export const authReducer = (
       return { ...state, isLoading: true };
 
     case AUTH_REQUEST_SUCCESSFUL:
-      return { ...state, isLoading: false, authData: action.payload };
+      return { ...state, isLoading: false, userInfo: action.payload };
 
     case AUTH_REQUEST_FAILED:
       return { ...state, isLoading: false, error: action.payload };
