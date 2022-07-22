@@ -16,8 +16,7 @@ const SharePost = () => {
   const dispatch = useDispatch();
   const userSignIn = useSelector(state => state.userAuth);
   const { userInfo, isLoading, error } = userSignIn;
-  const user = userInfo&&userInfo.result;
-
+  const user = userInfo && userInfo.result;
 
   const [image, setImage] = useState(null);
   const desc = useRef();
@@ -32,6 +31,7 @@ const SharePost = () => {
 
   const handleUpload = e => {
     e.preventDefault();
+
     const newPost = {
       user: user._id,
       description: desc.current.value
@@ -53,7 +53,7 @@ const SharePost = () => {
     }
 
     dispatch(postUploadAction(newPost));
-    resetShare();
+    // resetShare();
   };
 
   const resetShare = () => {

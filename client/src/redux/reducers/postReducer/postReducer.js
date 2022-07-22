@@ -2,7 +2,7 @@ import { POST_UPLOAD_REQUEST_FAILED, POST_UPLOAD_REQUEST_START, POST_UPLOAD_REQU
 
 
 export const postReducer = (
-  state = { posts: null, loading: false, error: false, uploading: false },
+  state = { posts: [] , loading: false, error: false, uploading: false },
   action
 ) => {
   switch (action.type) {
@@ -12,12 +12,12 @@ export const postReducer = (
     case POST_UPLOAD_REQUEST_SUCCESS:
       return {
         ...state,
-        posts: [action.data, ...state.posts],
+        posts: [action.payload, ...state.posts],
         uploading: false,
         error: false
       };
     case POST_UPLOAD_REQUEST_FAILED:
-      return { ...state, uploading: false, error: true };
+      return { ...state, uploading: false, error: action.payload };
     // belongs to Posts.jsx
     //   case "RETREIVING_START":
     //     return { ...state, loading: true, error: false };
