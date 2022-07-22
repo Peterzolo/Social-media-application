@@ -15,5 +15,6 @@ app.use(cors());
 
 app.use("/api/user", componentModule.userModule.routes);
 app.use("/api/post", componentModule.postModule.routes);
+app.use("/api/upload", componentModule.uploadModule.routes);
 
 export default app;

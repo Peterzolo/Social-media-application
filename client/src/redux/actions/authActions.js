@@ -7,7 +7,7 @@ import {
   SIGN_UP_REQUEST_START,
   SIGN_UP_REQUEST_SUCCESSFUL
 } from "../constant/authConstants.js";
-import * as AuthApi from "../endpoints.js";
+import * as AuthApi from "../endpoint/endpoints.js";
 
 export const loginAction = (formData) => async dispatch => {
   dispatch({ type: AUTH_REQUEST_START });

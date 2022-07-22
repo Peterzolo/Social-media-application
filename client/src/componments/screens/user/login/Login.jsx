@@ -22,7 +22,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const handleChange = e => {
     let { name, value } = e.target;
     setFormDate({ ...formData, [name]: value });
@@ -31,17 +30,19 @@ const Login = () => {
   const handleFormSubmit = e => {
     e.preventDefault();
     if (email && password) {
-      dispatch(loginAction(formData));
-      toast.success("Login successful")
-      navigate("/home")
+      if (!error) {
+        dispatch(loginAction(formData));
+        toast.success("Login successful");
+        navigate("/home");
+      } else {
+        toast.error(error);
+      }
     }
   };
 
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get("redirect");
   const redirect = redirectInUrl ? redirectInUrl : "/";
-
-
 
   useEffect(() => {
     if (newUserInfo) {
