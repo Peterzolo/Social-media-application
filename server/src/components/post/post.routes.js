@@ -10,15 +10,16 @@ import {
   getTimelinePosts,
   likePost,
   // getRelatedPosts,
-  postPost,
   removePost,
   searchPostByTitle,
+  sendPost,
   updateAPost,
 } from "./post.controller.js";
 import { authorizedAndAdmin, protect } from "../../middleware/auth2.js";
 import { upload } from "../../utils/multer.js";
 
-postRouter.post("/create", authorizedAndAdmin, upload.single("file"), postPost);
+// postRouter.post("/create", authorizedAndAdmin, upload.single("file"), postPost);
+postRouter.post("/create", sendPost);
 postRouter.get("/fetch-all", getAllPosts);
 postRouter.get("/fetch-one/:id", getOnePost);
 postRouter.put(

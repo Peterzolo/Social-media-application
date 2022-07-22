@@ -10,13 +10,14 @@ import { Luxury, sharePost } from "../../../data/followers";
 
 import "../share-post/SharePost.css";
 import { imageUploadAction } from "../../../redux/actions/uploadActions";
+import { postUploadAction } from "../../../redux/actions/postActions";
 const SharePost = () => {
   // const loading = useSelector((state) => state.postReducer.uploading);
   const dispatch = useDispatch();
   const userSignIn = useSelector(state => state.userAuth);
   const { userInfo, isLoading, error } = userSignIn;
   const user = userInfo&&userInfo.result;
-  console.log("USER", user);
+
 
   const [image, setImage] = useState(null);
   const desc = useRef();
@@ -51,7 +52,7 @@ const SharePost = () => {
       }
     }
 
-    // dispatch(uploadPost(newPost));
+    dispatch(postUploadAction(newPost));
     resetShare();
   };
 

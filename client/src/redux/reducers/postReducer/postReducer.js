@@ -1,8 +1,5 @@
-import {
-  POST_UPLOAD_REQUEST_FAILED,
-  POST_UPLOAD_REQUEST_START,
-  POST_UPLOAD_REQUEST_SUCCESS
-} from "../../constant/uploadConstants";
+import { POST_UPLOAD_REQUEST_FAILED, POST_UPLOAD_REQUEST_START, POST_UPLOAD_REQUEST_SUCCESS } from "../../constant/postConstants";
+
 
 export const postReducer = (
   state = { posts: null, loading: false, error: false, uploading: false },

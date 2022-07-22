@@ -13,10 +13,9 @@ import cloudinary from "../../utils/cloudinary.js";
 import { findUserById } from "../user/user.dao.js";
 import User from "../user/user.model.js";
 
-export const postPost = async (req, res) => {
+export const sendPost = async (req, res) => {
   try {
     const {
-      title,
       description,
       likes,
       user,
@@ -27,28 +26,29 @@ export const postPost = async (req, res) => {
     } = req.body;
     const userId = req.user;
     const findUser = userId;
-    if (user === findUser._id.toString() || findUser.isAdmin === true) {
-      const result = await cloudinary.uploader.upload(req.file.path);
-      const dataObject = {
-        title,
-        image: result.secure_url,
-        description,
-        likes,
-        user,
-        cloudinary_id: result.public_id,
-        createdAt,
-        status,
-        createdAt: new Date().toString(),
-      };
-      const postData = await createPost(dataObject);
-      res.status(200).json({
-        success: true,
-        message: "Post successfully created",
-        result: postData,
-      });
-    } else {
-      res.send({ message: "You are not authorized" });
-    }
+    // if (user === findUser._id.toString() || findUser.isAdmin === true) {
+    // const result = await cloudinary.uploader.upload(req.file.path);
+    const dataObject = {
+      image,
+      // image: result.secure_url,
+      description,
+      likes,
+      user,
+      // cloudinary_id: result.public_id,
+      cloudinary_id,
+      createdAt,
+      status,
+      createdAt: new Date().toString(),
+    };
+    const postData = await createPost(dataObject);
+    res.status(200).json({
+      success: true,
+      message: "Post successfully created",
+      result: postData,
+    });
+    // } else {
+    //   res.send({ message: "You are not authorized" });
+    // }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -302,15 +302,14 @@ export const likePost = async (req, res) => {
   }
 };
 
-
 export const getTimelinePosts = async (req, res) => {
-  const userId = req.params.id
+  const userId = req.params.id;
   try {
     const currentUserPosts = await fetchAllPosts({ user: userId });
-    console.log('CURRENT POST',currentUserPosts)
+    console.log("CURRENT POST", currentUserPosts);
 
     const followingPosts = await User.aggregate([
-      { 
+      {
         $match: {
           _id: new mongoose.Types.ObjectId(userId),
         },
