@@ -29,13 +29,12 @@ export const sendPost = async (req, res) => {
     // if (user === findUser._id.toString() || findUser.isAdmin === true) {
     // const result = await cloudinary.uploader.upload(req.file.path);
     const dataObject = {
-      image,
+      image :req.body.image,
       // image: result.secure_url,
       description,
       likes,
       user,
       // cloudinary_id: result.public_id,
-      cloudinary_id,
       createdAt,
       status,
       createdAt: new Date().toString(),
@@ -330,13 +329,16 @@ export const getTimelinePosts = async (req, res) => {
       },
     ]);
 
-    res.status(200).json(
-      currentUserPosts
-        .concat(...followingPosts[0].followingPosts)
-        .sort((a, b) => {
-          return new Date(b.createdAt) - new Date(a.createdAt);
-        })
-    );
+    const timeLinePosts = currentUserPosts
+      .concat(...followingPosts[0].followingPosts)
+      .sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+    res.status(200).json({
+      success : true,
+      message : "Posts successfully fetched",
+      result : timeLinePosts
+    });
   } catch (error) {
     res.status(500).json(error);
   }

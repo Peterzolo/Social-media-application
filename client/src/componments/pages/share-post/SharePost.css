@@ -100,4 +100,8 @@ height: 3rem;
 
 .share-icons{
     cursor: pointer;
+    background-color: rgb(30, 128, 214);
+    padding: 7px;
+    margin-left: 4px;
+    border-radius: 100%;
 }

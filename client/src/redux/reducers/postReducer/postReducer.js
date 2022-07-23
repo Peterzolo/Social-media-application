@@ -2,7 +2,7 @@ import { POST_UPLOAD_REQUEST_FAILED, POST_UPLOAD_REQUEST_START, POST_UPLOAD_REQU
 
 
 export const postReducer = (
-  state = { posts: [] , loading: false, error: false, uploading: false },
+  state = { posts: [] , isLoading: false, error: false, uploading: false },
   action
 ) => {
   switch (action.type) {

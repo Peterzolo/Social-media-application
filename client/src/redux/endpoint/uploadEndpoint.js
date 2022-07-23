@@ -6,6 +6,6 @@ const API = axios.create({baseURL : url})
 
 // UPLOAD ENDPOINT
 
-export const setUpload =(data) => API.post("/upload/create", data)
+export const setUpload =(FormData) => API.post("/upload/create", FormData)
 
 

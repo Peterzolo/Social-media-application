@@ -5,7 +5,7 @@ const path = require("path")
 
 
 
-export const upload =  multer({
+export const newUpload =  multer({
   storage: multer.diskStorage({}),
   
   fileFilter: (req, file, cb) => {

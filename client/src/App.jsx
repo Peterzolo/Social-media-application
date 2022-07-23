@@ -19,7 +19,7 @@ const App = () => {
   const user = userInfo;
 
  
-  console.log("USER INFORmation", user);
+
   return (
     <div className="App">
       {/* <div className="blur" style={{ top: "-18%", right: "0" }}></div>

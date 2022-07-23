@@ -1,14 +1,26 @@
 // import User from "../user/user.model"
+import Image from "./image.model.js";
 
-export const imageUpload = (req, res) => {
+import cloudinary from "../../utils/cloudinary.js";
+
+
+export const imageUpload = async(req, res) => {
   try {
-    const image = req.file.path;
+  // const body = req.body
+
+  const result = await cloudinary.uploader.upload(req.file.path);
+  const newImage =  new Image({
+  image : result.secure_url,
+  cloudinary_id : result.public_id,
+  })
+
+  const savedImage = await newImage.save()
     return res
       .status(200)
       .json({
         success: true,
         message: "File uploded successfully",
-        result: image,
+        result: savedImage,
       });
   } catch (error) {
     res.status(400).send(error.message);

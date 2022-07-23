@@ -15,8 +15,9 @@ const SharePost = () => {
   // const loading = useSelector((state) => state.postReducer.uploading);
   const dispatch = useDispatch();
   const userSignIn = useSelector(state => state.userAuth);
+  const loading = useSelector(state => state.posts.uploading);
   const { userInfo, isLoading, error } = userSignIn;
-  const user = userInfo && userInfo.result;
+  const user = userInfo;
 
   const [image, setImage] = useState(null);
   const desc = useRef();
@@ -44,7 +45,6 @@ const SharePost = () => {
       data.append("name", fileName);
       data.append("file", image);
       newPost.image = fileName;
-      console.log("NEW POST", newPost);
       try {
         dispatch(imageUploadAction(data));
       } catch (err) {
@@ -53,7 +53,7 @@ const SharePost = () => {
     }
 
     dispatch(postUploadAction(newPost));
-    // resetShare();
+    resetShare();
   };
 
   const resetShare = () => {
@@ -84,26 +84,35 @@ const SharePost = () => {
             <div className="option-label">Video</div>
             <UilPlayCircle style={{ color: "#d4380d", cursor: "pointer" }} />
           </div>
+          {/* //////////////////////////////////// */}
           <div className="option">
-            <div className="option-label">Location</div>
-            <UilLocationPoint style={{ color: "#5b8c00", cursor: "pointer" }} />
+            <div className="option-label">Share</div>
+
+            {loading ? (
+              "uploading"
+            ) : (
+              <img
+                src={sharePost}
+                alt=""
+                width="25"
+                className="share-icons"
+                onClick={handleUpload}
+              />
+            )}
           </div>
+
+          {/* ////////////////////////////////////////////////////// */}
           <div className="option">
             <div className="option-label">Schedule</div>
             <UilSchedule style={{ color: "#ad6800", cursor: "pointer" }} />
           </div>
 
+          {/* ///////////////////////////////////////////////////////// */}
           <div className="option">
-            <div className="option-label">Share</div>
-            <img
-              src={sharePost}
-              alt=""
-              width="25"
-              className="share-icons"
-              onClick={handleUpload}
-            />
+            <div className="option-label">Location</div>
+            <UilLocationPoint style={{ color: "#5b8c00", cursor: "pointer" }} />
           </div>
-
+          {/* ///////////////////////////////////////////////////////// */}
           <div className="file">
             <input
               type="file"

@@ -5,5 +5,5 @@ import { postReducer } from "./postReducer/postReducer";
 export const rootReducer = combineReducers({
   userAuth: authReducer,
   userRegister: registerReducer,
-  post: postReducer
+  posts: postReducer
 });

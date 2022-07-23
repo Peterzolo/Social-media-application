@@ -19,7 +19,8 @@ const PostSchema = mongoose.Schema(
     },
 
     image: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref : "image"
     },
 
     status: {

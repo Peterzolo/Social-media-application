@@ -9,14 +9,14 @@ import {
 } from "../constant/authConstants.js";
 import * as AuthApi from "../endpoint/endpoints.js";
 
-export const loginAction = (formData) => async dispatch => {
+export const loginAction = formData => async dispatch => {
   dispatch({ type: AUTH_REQUEST_START });
   try {
     const { data } = await AuthApi.setLogin(formData);
-    dispatch({ type: AUTH_REQUEST_SUCCESSFUL, payload: data});
+    dispatch({ type: AUTH_REQUEST_SUCCESSFUL, payload: data.result });
+
     localStorage.setItem("userInfo", JSON.stringify(data));
     // navigate("../home", { replace: true });
-   
   } catch (error) {
     dispatch({
       type: AUTH_REQUEST_FAILED,
@@ -28,8 +28,8 @@ export const loginAction = (formData) => async dispatch => {
   }
 };
 
-export const signUpAction = (formData) => async dispatch => {
-  dispatch({ type: SIGN_UP_REQUEST_START});
+export const signUpAction = formData => async dispatch => {
+  dispatch({ type: SIGN_UP_REQUEST_START });
   try {
     const { data } = await AuthApi.setRegister(formData);
     dispatch({ type: SIGN_UP_REQUEST_SUCCESSFUL, payload: data.result });
@@ -45,5 +45,3 @@ export const signUpAction = (formData) => async dispatch => {
     });
   }
 };
-
-

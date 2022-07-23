@@ -1,21 +1,25 @@
-import dotenv from 'dotenv';
-import app from './app.js';
+import express from "express";
+import dotenv from "dotenv";
+import app from "./app.js";
 // import { databaseConn } from './config/database.js';
 
-import apiErrorHandler from './error/api-error-handler.js';
-import { mongoConnection } from './new-config/new-databaseConn.js';
+import apiErrorHandler from "./error/api-error-handler.js";
+import { mongoConnection } from "./new-config/new-databaseConn.js";
 
 dotenv.config();
 
 // databaseConn()
 mongoConnection();
 
-app.get('/', (req, res) => {
-  res.send('index');
+app.get("/", (req, res) => {
+  res.send("index");
 });
 
-app.get('/api/config/paypal', (req, res) => {
-  res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
+app.use(express.static("src"));
+app.use("public/images", express.static("images"));
+
+app.get("/api/config/paypal", (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
 
 app.use(apiErrorHandler);
